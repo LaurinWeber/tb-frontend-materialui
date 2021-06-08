@@ -1,0 +1,93 @@
+{
+  "accounts": [
+    {
+      "id": 1,
+      "isActive": true,
+      "firstname": "Laurin",
+      "lastname": "Weber",
+      "address": "Alte Gasse 4",
+      "zip": "3704",
+      "city": "Krattigen",
+      "Birthdate": "16.09.1994",
+      "mail": "laurin.weber@outlook.com",
+      "password": "password",
+      "phone": "+41 79 766 87 88",
+      "ahv": "756.123.456.789.90",
+      "iban": "CH 75 0900 0000 8532 6278 8",
+      "start": "01.01.2020",
+      "end": "01.01.2025",
+      "isFullTime": false,
+      "salary": 30.5,
+      "gender": "male",
+      "education": "pro",
+      "categories": [
+        {
+          "ski": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "snowboard:": [
+            1,
+            2
+          ]
+        }
+      ],
+      "languages": [
+        "DE",
+        "EN",
+        "FR"
+      ]
+    },
+    {
+      "id": 2,
+      "isActive": true,
+      "firstname": "Roxane",
+      "lastname": "Hellmüller",
+      "address": "Route Touristique 12",
+      "zip": "3963",
+      "city": "Crans-Montana",
+      "Birthdate": "16.05.1989",
+      "mail": "roxane@hellmuller.ch",
+      "password": "password",
+      "phone": "+41 79 766 87 88",
+      "ahv": "756.123.456.789.90",
+      "iban": "CH 75 0900 0000 8532 6278 8",
+      "start": "01.01.2020",
+      "end": "01.01.2025",
+      "isFullTime": true,
+      "salary": 3800.5,
+      "gender": "female",
+      "education": "pro",
+      "categories": [
+        {
+          "ski": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "snowboard:": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "languages": [
+        "DE",
+        "EN",
+        "FR",
+        "IT"
+      ]
+    },
+    {
+      "firstname": "Hans",
+      "gender": "male",
+      "id": 3
+    }
+  ]
+}
