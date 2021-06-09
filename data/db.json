@@ -86,8 +86,286 @@
     },
     {
       "firstname": "Hans",
-      "gender": "male",
+      "lastname": "Muster",
+      "address": "Musterstrasse",
+      "zip": "1111",
+      "city": "Musterhausen",
+      "birthdate": "2021-06-09T06:42:05.428Z",
+      "email": "hand@muster.ch",
+      "password": "muster",
+      "phone": "0797997878",
+      "ahv": "758.123.456.78",
+      "iban": "CH50 00000 00000 00000 15623 9",
+      "start": "2021-06-09T06:42:05.428Z",
+      "end": "2021-06-09T06:42:05.428Z",
+      "isFullTime": false,
+      "salary": 0,
+      "gender": "female",
+      "education": "ZA",
+      "skills": [],
+      "languages": [],
       "id": 3
+    },
+    {
+      "firstname": "Laurin",
+      "lastname": "Weber",
+      "address": "Alte Gasse 4",
+      "zip": "3704",
+      "city": "Krattigen",
+      "birthdate": "2021-06-09T06:43:30.863Z",
+      "email": "l.w@mail.ch",
+      "password": "password",
+      "phone": "0797668788",
+      "ahv": "756.132.456.789.78",
+      "iban": "CH50 0000 0155 5666 9",
+      "start": "2021-06-09T06:43:30.863Z",
+      "end": "2021-07-14T06:43:00.000Z",
+      "isFullTime": false,
+      "salary": 0,
+      "gender": "male",
+      "education": "Patente",
+      "skills": [
+        {
+          "category": "ski",
+          "beginner": true,
+          "advanced": true,
+          "professional": true
+        },
+        {
+          "category": "snowboard",
+          "beginner": true,
+          "advanced": true,
+          "professional": false
+        }
+      ],
+      "languages": [],
+      "id": 4
+    },
+    {
+      "isActive": true,
+      "firstname": "Test",
+      "lastname": "Tester",
+      "address": "test",
+      "zip": "234234",
+      "city": "gdskg",
+      "birthdate": "2021-06-09T07:26:11.326Z",
+      "email": "asdf@asf.ch",
+      "password": "asdlfjaflj",
+      "phone": "4564654",
+      "ahv": "6545465465441",
+      "iban": "654654654",
+      "start": "2022-01-15T23:00:00.000Z",
+      "end": "2022-12-31T23:00:00.000Z",
+      "isFullTime": true,
+      "salary": "1250",
+      "gender": "male",
+      "education": "Patente",
+      "skills": [],
+      "languages": {
+        "0": {
+          "en": false,
+          "fr": false,
+          "de": false,
+          "it": false
+        },
+        "en": true
+      },
+      "id": 5
+    },
+    {
+      "isActive": false,
+      "firstname": "Lauri",
+      "lastname": "Weber",
+      "address": "Alte Gasse",
+      "zip": "3704",
+      "city": "Krattigen",
+      "birthdate": "2021-06-09T08:36:11.691Z",
+      "email": "l.w@mail.ch",
+      "password": "asdfasfd",
+      "phone": "+41 79 766 87 88",
+      "ahv": "123.123.456.45",
+      "iban": "CH50",
+      "start": "2021-06-09T08:36:11.691Z",
+      "end": "2021-06-09T08:36:11.691Z",
+      "isFullTime": true,
+      "salary": "2000",
+      "gender": "male",
+      "education": "Patente",
+      "skills": [
+        {
+          "category": "ski",
+          "beginner": true,
+          "advanced": true,
+          "professional": true
+        }
+      ],
+      "languages": {
+        "0": {
+          "en": false,
+          "fr": false,
+          "de": false,
+          "it": false
+        },
+        "en": true
+      },
+      "id": 6
+    },
+    {
+      "isActive": false,
+      "firstname": "test",
+      "lastname": "tester",
+      "address": "",
+      "zip": "",
+      "city": "",
+      "birthdate": "2021-06-09T08:38:53.184Z",
+      "email": "",
+      "password": "",
+      "phone": "",
+      "ahv": "",
+      "iban": "",
+      "start": "2021-06-09T08:38:53.184Z",
+      "end": "2021-06-09T08:38:53.184Z",
+      "isFullTime": false,
+      "salary": 0,
+      "gender": "female",
+      "education": "Patente",
+      "skills": [],
+      "languages": {
+        "en": true
+      },
+      "id": 7
+    },
+    {
+      "isActive": false,
+      "firstname": "t",
+      "lastname": "a",
+      "address": "",
+      "zip": "",
+      "city": "",
+      "birthdate": "2021-06-09T08:40:31.604Z",
+      "email": "",
+      "password": "",
+      "phone": "",
+      "ahv": "",
+      "iban": "",
+      "start": "2021-06-09T08:40:31.604Z",
+      "end": "2021-06-09T08:40:31.604Z",
+      "isFullTime": false,
+      "salary": 0,
+      "gender": "female",
+      "education": "ZA",
+      "skills": [],
+      "languages": [],
+      "id": 8
+    },
+    {
+      "isActive": false,
+      "firstname": "t",
+      "lastname": "a",
+      "address": "",
+      "zip": "",
+      "city": "",
+      "birthdate": "2021-06-09T08:40:39.884Z",
+      "email": "",
+      "password": "",
+      "phone": "",
+      "ahv": "",
+      "iban": "",
+      "start": "2021-06-09T08:40:39.884Z",
+      "end": "2021-06-09T08:40:39.884Z",
+      "isFullTime": false,
+      "salary": 0,
+      "gender": "female",
+      "education": "ZA",
+      "skills": [
+        {
+          "category": "s",
+          "beginner": true,
+          "advanced": true,
+          "professional": true
+        }
+      ],
+      "languages": {
+        "en": true,
+        "fr": true,
+        "de": true,
+        "it": true
+      },
+      "id": 9
+    },
+    {
+      "isActive": false,
+      "firstname": "Test",
+      "lastname": "Person",
+      "address": "",
+      "zip": "",
+      "city": "",
+      "birthdate": "2021-06-09T08:49:40.094Z",
+      "email": "",
+      "password": "",
+      "phone": "",
+      "ahv": "",
+      "iban": "",
+      "start": "2021-06-09T08:49:40.094Z",
+      "end": "2021-06-09T08:49:40.094Z",
+      "isFullTime": true,
+      "salary": "3500",
+      "gender": "female",
+      "education": "Instructor",
+      "skills": [
+        {
+          "category": "snowboard",
+          "beginner": true,
+          "advanced": true,
+          "professional": true
+        }
+      ],
+      "languages": {
+        "de": true,
+        "fr": true,
+        "en": true,
+        "it": true
+      },
+      "id": 10
+    },
+    {
+      "isActive": true,
+      "firstname": "Test",
+      "lastname": "Tester",
+      "address": "",
+      "zip": "",
+      "city": "",
+      "birthdate": "2021-06-09T09:04:02.869Z",
+      "email": "",
+      "password": "",
+      "phone": "",
+      "ahv": "",
+      "iban": "",
+      "start": "2021-06-09T09:04:02.869Z",
+      "end": "2021-06-09T09:04:02.869Z",
+      "isFullTime": true,
+      "salary": 0,
+      "gender": "male",
+      "education": "Aspirant",
+      "skills": [
+        {
+          "category": "snowboard",
+          "beginner": true,
+          "advanced": true,
+          "professional": true
+        },
+        {
+          "category": "ski",
+          "beginner": true,
+          "advanced": true,
+          "professional": false
+        }
+      ],
+      "languages": {
+        "de": true,
+        "fr": true
+      },
+      "id": 11
     }
   ]
 }

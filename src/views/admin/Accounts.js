@@ -42,7 +42,7 @@ export default function Accounts() {
     return (
         <Container>
             <Grid container spacing={3}>
-                <Grid item xs={12} justify={'flex-end'} >
+                <Grid item xs={12} >
                     <Tooltip
                         id="tool-tip-save"
                         title='Add Account'

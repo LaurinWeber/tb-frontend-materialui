@@ -1,19 +1,17 @@
 import React from 'react'
-import { Card, CardHeader, CardContent, IconButton, Grid, makeStyles, Avatar, Tooltip } from '@material-ui/core';
+import { Card, CardHeader, IconButton, makeStyles, Avatar, Tooltip } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { green, red } from '@material-ui/core/colors';
-import * as MdIcons from "react-icons/md";
 import * as FaIcons from "react-icons/fa";
-import * as GrIcons from "react-icons/gr";
-import * as AiIcons from "react-icons/ai";
+
 
 const useStyles = makeStyles({
     avatar: {
         backgroundColor: (skill) => {
-            if (skill.category == 'ski') {
+            if (skill.category === 'ski') {
                 return green[500]
             } 
-            if (skill.category == 'snowboard') {
+            if (skill.category === 'snowboard') {
                 return red[500]
             } 
         }
@@ -35,10 +33,10 @@ export default function SkillCard({skill, deleteSkill}) {
     }
 
     var avatar = null;
-    if(skill.category == 'ski'){
+    if(skill.category === 'ski'){
         avatar = <FaIcons.FaSkiing/>;
     }
-    if (skill.category == 'snowboard'){
+    if (skill.category === 'snowboard'){
         avatar = <FaIcons.FaSnowboarding/>
     }
     

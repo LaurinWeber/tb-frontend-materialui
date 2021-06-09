@@ -67,7 +67,7 @@ export default function Layout({ children }) {
     return (
         <div className={classes.root}>
             {/*app bar*/}
-            <AppBar className={classes.appbar} elevation={0} color={"transparent"}>
+            <AppBar className={classes.appbar} elevation={0} color={"white"}>
                 <Toolbar>
                     <Typography className={classes.toolLeft}> 
                         
