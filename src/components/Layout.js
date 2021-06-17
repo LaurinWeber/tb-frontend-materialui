@@ -3,6 +3,7 @@ import React from 'react'
 import { Drawer, Topography, List, ListItem, ListItemIcon, ListItemText, AppBar, Toolbar, Avatar } from '@material-ui/core'
 import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import { useHistory, useLocation } from 'react-router-dom';
 import App from '../App';
 
@@ -60,6 +61,12 @@ export default function Layout({ children }) {
             text: 'Groups',
             icon: <LocalOfferOutlinedIcon color={"secondary"} />,
             path: '/accounts'
+
+        },
+        {
+            text: 'Calendar',
+            icon: <CalendarTodayIcon color={"secondary"} />,
+            path: '/calendar'
 
         }
     ]

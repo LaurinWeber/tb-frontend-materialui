@@ -6,6 +6,8 @@ import Home from "./views/customer/Home";
 import Accounts from "./views/admin/Accounts";
 import AccountDetails from "./views/admin/AccountDetails";
 import Layout from './components/Layout';
+import AccountForm from './views/admin/AccountForm';
+import Calendar from './views/admin/Calendar';
 
 
 const theme = createMuiTheme({
@@ -30,7 +32,12 @@ function App() {
             <Route exact path="/">
               <Accounts />
             </Route>
-            <Route path="/accounts" component={AccountDetails} />
+            <Route path="/accounts" >
+              <AccountDetails/>
+            </Route>
+            <Route path="/calendar" >
+              <Calendar/>
+            </Route>
           </Switch>
         </Layout>
       </Router>
