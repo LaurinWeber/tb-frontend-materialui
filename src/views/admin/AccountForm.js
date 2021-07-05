@@ -1,16 +1,13 @@
 import React, { useState } from 'react'
-import { InputLabel, Select, MenuItem, IconButton, Button, Container, Typography, TextField, Radio, RadioGroup, FormControlLabel, FormLabel, FormControl, Switch, Grid, FormGroup, Checkbox, FormHelperText, Dialog, DialogTitle, DialogContent, DialogActions, Divider } from "@material-ui/core";
+import { Button, Container, Typography, TextField, Radio, RadioGroup, FormControlLabel, FormLabel, FormControl, Switch, Grid, FormGroup, Checkbox, FormHelperText, Dialog, DialogTitle, DialogContent, DialogActions, Divider } from "@material-ui/core";
 import PublishIcon from '@material-ui/icons/Publish';
 import { makeStyles } from "@material-ui/core";
-import { Block } from '@material-ui/icons';
-import { useHistory } from 'react-router-dom';
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 import SkillCard from '../../components/SkillCard';
-import CloseIcon from '@material-ui/icons/Close';
 import SkillForm from './SkillForm';
 
 const useStyles = makeStyles({
@@ -31,7 +28,7 @@ const GENDERS = ['female', 'male'];
 const EDUCATIONS = ['ZA', 'Aspirant', 'Instructor', 'Patenter'];
 const LANGUAGES = ['en', 'fr', 'de', 'it'];
 
-export default function AccountForm({ account, setAccount, skill, setSkill, skills, addSkill, deleteSkill, categories, handleSubmit, error, setError }) {
+export default function AccountForm({ account, setAccount, skill, setSkill, skills, setSkills, addSkill, deleteSkill, categories, handleSubmit, error, setError }) {
     const classes = useStyles();
 
     return (
@@ -68,6 +65,7 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                     </Grid>
                     <Grid item xs={6}>
                         <TextField
+                            value={account.firstname}
                             label="Firstname"
                             variant="outlined"
                             fullWidth
@@ -84,6 +82,7 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                     </Grid>
                     <Grid item xs={6}>
                         <TextField
+                            value={account.lastname}
                             label="Lastname"
                             variant="outlined"
                             fullWidth
@@ -100,6 +99,7 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
+                            value={account.address}
                             label="Address"
                             variant="outlined"
                             fullWidth
@@ -115,6 +115,7 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                     </Grid>
                     <Grid item xs={3}>
                         <TextField
+                            value={account.zip}
                             label="Zip"
                             variant="outlined"
                             fullWidth
@@ -130,6 +131,7 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                     </Grid>
                     <Grid item xs={9}>
                         <TextField
+                        value={account.city}
                             label="City"
                             variant="outlined"
                             fullWidth
@@ -149,11 +151,12 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
+                                inputValue={account.birthdate}
+                                value={account.birthdate}
                                 format="dd/MM/yyyy"
                                 margin="normal"
                                 id="date-picker"
                                 label="Birthdate"
-                                value={account.birthdate}
                                 onChange={(date) => setAccount(prevState => (
                                     {
                                         ...prevState,
@@ -166,6 +169,7 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                     </MuiPickersUtilsProvider>
                     <Grid item xs={12} sm={6}>
                         <TextField
+                        value={account.email}
                             label="Email"
                             variant="outlined"
                             fullWidth
@@ -181,6 +185,7 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField
+                            value={account.password}
                             label="Password"
                             variant="outlined"
                             fullWidth
@@ -197,6 +202,7 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                     </Grid>
                     <Grid item xs={12} sm={8}>
                         <TextField
+                        value={account.phone}
                             label="Phone"
                             variant="outlined"
                             fullWidth
@@ -213,7 +219,9 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField
+                        value={account.ahv}
                             label="AVS / AHV"
+                            maxLen
                             variant="outlined"
                             fullWidth
                             className={classes.field}
@@ -223,11 +231,13 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                                     ahv: e.target.value
                                 }
                             ))}
+                            maxLen={13}
                             error={error.ahv}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField
+                          value={account.iban}
                             label="IBAN"
                             variant="outlined"
                             fullWidth
@@ -272,6 +282,7 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField
+                        value={account.salary}
                             label="Salary"
                             variant="outlined"
                             fullWidth
@@ -292,6 +303,7 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
+                                inputValue={account.start}
                                 format="dd/MM/yyyy"
                                 margin="normal"
                                 id="date-picker"
@@ -311,6 +323,7 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
+                                inputValue={account.end}
                                 format="dd/MM/yyyy"
                                 margin="normal"
                                 id="date-picker"
@@ -343,20 +356,20 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                         </Grid>
                     )) : null}
                     <SkillForm skill={skill} setSkill={setSkill} categories={categories} />
-                    <Grid item xs={6} sm={6}>
+                    <Grid item xs={12} sm={12}>
                         <Button
                             type="submit"
                             color="secondary"
                             variant="outlined"
-                            onClick={addSkill}
+                            onClick={addSkill/*() => setSkills([...skills, skill])*/}
                         >
                             Add Skill
                         </Button>
                     </Grid>
-                    <Grid item xs={12} sm={3}>
+                    <Grid item xs={12} sm={4}>
                         <FormControl className={classes.field}>
                             <FormLabel color={'secondary'}>Gender</FormLabel>
-                            <RadioGroup value={account.gender} onChange={(e) => setAccount(prevState => (
+                            <RadioGroup value={account.gender}  defaultValue={account.gender} onChange={(e) => setAccount(prevState => (
                                     {
                                         ...prevState,
                                         gender: e.target.value
@@ -368,10 +381,10 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                             </RadioGroup>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12} sm={3}>
+                    <Grid item xs={12} sm={4}>
                         <FormControl className={classes.field}>
                             <FormLabel color={'secondary'}>Education</FormLabel>
-                            <RadioGroup value={account.education} onChange={(e) => setAccount(prevState => (
+                            <RadioGroup value={account.education} defaultValue={account.education} onChange={(e) => setAccount(prevState => (
                                     {
                                         ...prevState,
                                         education: e.target.value
@@ -383,7 +396,7 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                             </RadioGroup>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12} sm={3}>
+                    <Grid item xs={12} sm={4}>
                         <FormControl component="fieldset" className={classes.field}>
                             <FormLabel component="legend">Languages</FormLabel>
                             <FormGroup>
@@ -406,9 +419,7 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                             </FormGroup>
                         </FormControl>
                     </Grid>
-                    {console.log(account)}
                 </Grid>
-        
         </Container >
     )
 }

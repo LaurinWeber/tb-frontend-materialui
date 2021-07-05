@@ -10,60 +10,79 @@ const useStyles = makeStyles({
         backgroundColor: (skill) => {
             if (skill.category === 'ski') {
                 return green[500]
-            } 
+            }
             if (skill.category === 'snowboard') {
                 return red[500]
-            } 
+            }
         }
+    },
+    card:{
+        marginTop: 10
     }
 })
 
-export default function SkillCard({skill, deleteSkill}) {
+export default function SkillCard({ skill, deleteSkill, isOverview }) {
     const classes = useStyles(skill)
 
     var levels = '';
-    if(skill.beginner){
+    if (skill.beginner) {
         levels = 'Beginner ';
     }
-    if (skill.advanced){
+    if (skill.advanced) {
         levels = levels + 'Advanced '
     }
-    if(skill.professional){
+    if (skill.professional) {
         levels = levels + 'Professional'
     }
 
     var avatar = null;
-    if(skill.category === 'ski'){
-        avatar = <FaIcons.FaSkiing/>;
+    if (skill.category === 'ski') {
+        avatar = <FaIcons.FaSkiing />;
     }
-    if (skill.category === 'snowboard'){
-        avatar = <FaIcons.FaSnowboarding/>
+    if (skill.category === 'snowboard') {
+        avatar = <FaIcons.FaSnowboarding />
     }
-    
+
     return (
         <div>
-             <Card elevation={3} >
-                <CardHeader
-                    avatar={
-                        <Avatar className={classes.avatar}>
-                            {avatar}
-                        </Avatar>
-                    }
-                    action={
-                        <Tooltip
-                        id="tool-tip-delete"
-                        title='Delete Skill'
-                        placement='top'
-                    >
-                        <IconButton onClick={() => deleteSkill(skill.category)}>
-                            <DeleteOutlineIcon />
-                        </IconButton>
-                    </Tooltip>
-                    }
-                    title={skill.category.toUpperCase()}
-                    subheader={levels}
-                />
-            </Card>
+            {isOverview ?
+                <Card elevation={3} className={classes.card} >
+                    <CardHeader
+                        avatar={
+                            <Avatar className={classes.avatar}>
+                                {avatar}
+                            </Avatar>
+                        }
+                        
+                        title={skill.category.toUpperCase()}
+                        subheader={levels}
+                    />
+                </Card>
+                :
+                <Card elevation={3} >
+                    <CardHeader
+                        avatar={
+                            <Avatar className={classes.avatar}>
+                                {avatar}
+                            </Avatar>
+                        }
+                        action={
+                            <Tooltip
+                                id="tool-tip-delete"
+                                title='Delete Skill'
+                                placement='top'
+                            >
+                                <IconButton onClick={() => deleteSkill(skill.category)}>
+                                    <DeleteOutlineIcon />
+                                </IconButton>
+                            </Tooltip>
+                        }
+                        title={skill.category.toUpperCase()}
+                        subheader={levels}
+                    />
+                </Card>
+            }
+
         </div>
     )
 }

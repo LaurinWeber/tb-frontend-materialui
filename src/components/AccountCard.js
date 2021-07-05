@@ -1,10 +1,12 @@
-import React, {useState} from 'react'
-import { Card,CardActions, Collapse, Typography, CardHeader, CardContent, IconButton, Grid, makeStyles, Avatar, Tooltip } from '@material-ui/core';
+import React, { useState, useEffect } from 'react'
+import { Card, CardActions, Collapse, Typography, CardHeader, CardContent, IconButton, Grid, makeStyles, Avatar, Tooltip } from '@material-ui/core';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { green, red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import SkillCard from './SkillCard';
 
-const useStyles = makeStyles((theme)=>({
+const useStyles = makeStyles((theme) => ({
     avatar: {
         backgroundColor: (account) => {
             if (account.isActive == true) {
@@ -24,11 +26,23 @@ const useStyles = makeStyles((theme)=>({
     expandOpen: {
         transform: 'rotate(180deg)',
     },
+    right:{
+        marginLeft: 'auto',
+        float: "right"
+    }
 }))
 
-export default function AccountCard({ account }) {
+export default function AccountCard({ account, handleEdit, handleDelete }) {
     const classes = useStyles(account)
     const [expanded, setExpanded] = useState(false)
+    const [skills, setSkills] = useState([])
+    const isOverview = true;
+
+    useEffect(() => {
+        const sk = account.skills
+        setSkills(sk)
+    }, [])
+
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -47,7 +61,7 @@ export default function AccountCard({ account }) {
                             title='Edit Account'
                             placement='top'
                         >
-                            <IconButton onClick={() => console.log('Edit', account.firstname + ' ' + account.lastname)}>
+                            <IconButton onClick={() => handleEdit(account.accountID)}>
                                 <EditOutlinedIcon />
                             </IconButton>
                         </Tooltip>
@@ -55,6 +69,7 @@ export default function AccountCard({ account }) {
                     title={account.firstname + ' ' + account.lastname}
                     subheader={account.phone}
                 />
+
                 <CardActions disableSpacing>
                     <IconButton
                         className={classes.expand, {
@@ -66,14 +81,25 @@ export default function AccountCard({ account }) {
                     >
                         <ExpandMoreIcon />
                     </IconButton>
+                    <Tooltip
+                        id="tool-tip-delete"
+                        title='Delete Account'
+                        placement='bottom'
+                    >
+                        <IconButton onClick={() => handleDelete(account.accountID)}  className={classes.right}>
+                            <DeleteOutlineIcon />
+                        </IconButton>
+                    </Tooltip>
                 </CardActions>
+
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
-                        <Typography paragraph>Method:</Typography>
-                        <Typography paragraph>
-                            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-                            minutes.
-                        </Typography>
+                        <Typography paragraph>Skills:</Typography>
+                        {skills.length ? skills.map(skill => (
+                            <Grid spacing={5} item key={skill.category} xs={12} sm={12} md={12}>
+                                <SkillCard skill={skill} isOverview={isOverview} />
+                            </Grid>
+                        )) : null}
 
                     </CardContent>
                 </Collapse>

@@ -34,7 +34,6 @@ export default function SkillForm({skill, setSkill, categories}) {
                             {categories.map( (category) =>(
                                 <MenuItem key={category} value={category}>{category}</MenuItem>
                             ))}
-                            {console.log(skill)}
                         </Select>
                     </FormControl>
                 </Grid>

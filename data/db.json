@@ -1,32 +1,226 @@
 {
   "accounts": [
     {
-      "isActive": true,
+      "isActive": false,
       "firstname": "Laurin",
       "lastname": "Weber",
+      "address": "",
+      "zip": "",
+      "city": "",
+      "birthdate": "2021-06-30T14:30:57.312Z",
+      "email": "",
+      "password": "",
+      "phone": "",
+      "ahv": "",
+      "iban": "",
+      "start": "2021-06-30T14:30:57.312Z",
+      "end": "2021-06-30T14:30:57.312Z",
+      "isFullTime": false,
+      "salary": 0,
+      "gender": "female",
+      "education": "ZA",
+      "skills": [],
+      "languages": {
+        "en": false,
+        "fr": true,
+        "de": false,
+        "it": false
+      },
+      "skill": [
+        {
+          "category": "snowboard",
+          "beginner": true,
+          "advanced": true,
+          "professional": false
+        }
+      ],
+      "id": 1
+    },
+    {
+      "isActive": true,
+      "firstname": "Frank",
+      "lastname": "Senatra",
       "address": "Alte Gasse 4",
-      "zip": "3704",
-      "city": "Krattigen",
-      "birthdate": "1994-09-16T20:13:00.000Z",
-      "email": "laurin.weber@outlook.com",
-      "password": "123456789",
-      "phone": "0797668788",
-      "ahv": "756.1234.4567.12",
-      "iban": "CH51 0000 0000 5896 9",
-      "start": "2021-06-17T20:13:30.724Z",
-      "end": "2021-11-05T21:13:00.000Z",
+      "zip": "",
+      "city": "",
+      "birthdate": "2021-07-03T11:17:00.000Z",
+      "email": "",
+      "password": "",
+      "phone": "",
+      "ahv": "",
+      "iban": "",
+      "start": "2021-07-01T11:17:43.411Z",
+      "end": "2021-07-01T11:17:43.411Z",
       "isFullTime": false,
       "salary": 0,
       "gender": "male",
       "education": "Patenter",
-      "skills": [],
+      "skills": [
+        [
+          {
+            "category": "ski",
+            "beginner": true,
+            "advanced": true,
+            "professional": true
+          }
+        ],
+        [
+          {
+            "category": "ski",
+            "beginner": true,
+            "advanced": true,
+            "professional": true
+          },
+          {
+            "category": "snowboard",
+            "beginner": true,
+            "advanced": true,
+            "professional": true
+          }
+        ]
+      ],
       "languages": {
         "en": true,
         "fr": true,
         "de": true,
         "it": false
       },
-      "id": 1
+      "id": 2
+    },
+    {
+      "isActive": true,
+      "firstname": "Max",
+      "lastname": "Hummels",
+      "address": "",
+      "zip": "",
+      "city": "",
+      "birthdate": "2021-07-01T11:17:43.411Z",
+      "email": "",
+      "password": "",
+      "phone": "",
+      "ahv": "",
+      "iban": "",
+      "start": "2021-07-01T11:17:43.411Z",
+      "end": "2021-07-01T11:17:43.411Z",
+      "isFullTime": false,
+      "salary": 0,
+      "gender": "female",
+      "education": "ZA",
+      "skills": [
+        [
+          {
+            "category": "ski",
+            "beginner": true,
+            "advanced": true,
+            "professional": false
+          }
+        ],
+        [
+          {
+            "category": "ski",
+            "beginner": true,
+            "advanced": true,
+            "professional": false
+          },
+          {
+            "category": "snowboard",
+            "beginner": true,
+            "advanced": true,
+            "professional": false
+          }
+        ]
+      ],
+      "languages": {
+        "en": true,
+        "fr": true,
+        "de": false,
+        "it": false
+      },
+      "id": 3
+    },
+    {
+      "isActive": true,
+      "firstname": "Kevin",
+      "lastname": "Kobler",
+      "address": "",
+      "zip": "",
+      "city": "",
+      "birthdate": "2021-07-01T11:21:56.238Z",
+      "email": "",
+      "password": "",
+      "phone": "",
+      "ahv": "",
+      "iban": "",
+      "start": "2021-07-01T11:21:56.238Z",
+      "end": "2021-07-01T11:21:56.238Z",
+      "isFullTime": false,
+      "salary": 0,
+      "gender": "female",
+      "education": "ZA",
+      "skills": {
+        "skills": [
+          {
+            "category": "snowboard",
+            "beginner": false,
+            "advanced": false,
+            "professional": true
+          },
+          {
+            "category": "ski",
+            "beginner": true,
+            "advanced": true,
+            "professional": false
+          }
+        ]
+      },
+      "languages": {
+        "en": false,
+        "fr": false,
+        "de": false,
+        "it": false
+      },
+      "id": 4
+    },
+    {
+      "isActive": false,
+      "firstname": "Laurin",
+      "lastname": "Weber",
+      "address": "Alte Gasse 4",
+      "zip": "3704",
+      "city": "Krattigen",
+      "birthdate": "1994-09-16T11:21:00.000Z",
+      "email": "laurin.weber@outlook.com",
+      "password": "3704krattigen",
+      "phone": "0797668788",
+      "ahv": "56.078.123.54",
+      "iban": "CH51 0000 2154 8",
+      "start": "2021-07-01T11:21:56.238Z",
+      "end": "2021-07-29T11:21:00.000Z",
+      "isFullTime": true,
+      "salary": "2500",
+      "gender": "male",
+      "education": "Patenter",
+      "skills": [
+        {
+          "category": "ski",
+          "beginner": true,
+          "advanced": true,
+          "professional": true
+        },
+        {
+          "category": "snowboard",
+          "beginner": true,
+          "advanced": true,
+          "professional": false
+        }
+      ],
+      "languages": {
+        "en": true,
+        "fr": true,
+        "de": true,
+        "it": false
+      },
+      "id": 5
     }
   ]
 }
