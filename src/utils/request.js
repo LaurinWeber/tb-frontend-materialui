@@ -13,6 +13,11 @@ export default async function (url, method = 'GET', body) {
                 },
             });
         }
+        if(method === "DELETE"){
+            response = await fetch(url, {
+                method: method,
+            });
+        }
         if(method === "POST" || method === "PUT"){
             response = await fetch(url, {
                 method: method,

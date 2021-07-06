@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import AccountForm from './AccountForm';
 import SaveIcon from '@material-ui/icons/Save';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import request from '../../utils/request';
 
 const useStyles = makeStyles((theme) => {
     return {
@@ -113,10 +114,11 @@ export default function Accounts() {
     const [categories, setCategories] = useState(CATEGORIES);
     const [isNew, setIsNew] = useState(true);
 
-    useEffect(() => {
-        fetch('https://localhost:5001/account')
-            .then(res => res.json())
-            .then(data => setAccounts(data))
+    useEffect(async () => {
+        let data = await request(
+            'https://localhost:5001/account/',
+            "GET");
+            setAccounts(data);
     }, [accounts, skills])
 
     useEffect(() => {
@@ -161,7 +163,7 @@ export default function Accounts() {
     }
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         //reset errors
@@ -192,23 +194,22 @@ export default function Accounts() {
                 phone: true,
             }))
         }
-
+        let body = JSON.stringify(account);
         if (isNew) {
-            fetch('https://localhost:5001/account', {
-                method: 'POST',
-                headers: { "Content-type": "application/json" },
-                body: JSON.stringify(
-                    account)
-            }).then(() => history.push('/'))
+            let response = await request(
+                'https://localhost:5001/account/',
+                "POST",
+                body);
+            console.log("response: ", response)
+            history.push('/')
         } else {
-            fetch('https://localhost:5001/account', {
-                method: 'PUT',
-                headers: { "Content-type": "application/json" },
-                body: JSON.stringify(
-                    account)
-            }).then(() => history.push('/'))
+            let response = await request(
+                'https://localhost:5001/account/',
+                "PUT",
+                body);
+            console.log("response: ", response)
+            history.push('/')
         }
-
         handleAddAccount();
     }
 
@@ -234,9 +235,10 @@ export default function Accounts() {
     }
 
     const handleDelete = async (id) => {
-        fetch('https://localhost:5001/account/' + id, {
-            method: 'DELETE',
-        })
+        let response = await request(
+            'https://localhost:5001/account/' + id,
+            "DELETE");
+        console.log("response: ", response)
         //do not display deleted item
         const newAccounts = accounts.filter(account => account.accountID != id);
         setAccounts(newAccounts);

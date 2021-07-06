@@ -60,7 +60,7 @@ export default function Layout({ children }) {
         {
             text: 'Groups',
             icon: <LocalOfferOutlinedIcon color={"secondary"} />,
-            path: '/accounts'
+            path: '/login'
 
         },
         {
