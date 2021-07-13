@@ -9,13 +9,13 @@ const useStyles = makeStyles((theme) => {
     }
 })
 
-function Home() {
+function Page404() {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            Home
+            404 Page not found
         </div>
     )
 }
 
-export default Home
+export default Page404

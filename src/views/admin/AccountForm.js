@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import { Button, Container, Typography, TextField, Radio, RadioGroup, FormControlLabel, FormLabel, FormControl, Switch, Grid, FormGroup, Checkbox, FormHelperText, Dialog, DialogTitle, DialogContent, DialogActions, Divider } from "@material-ui/core";
+import {InputAdornment,IconButton, Button, Container, Typography, TextField, Radio, RadioGroup, FormControlLabel, FormLabel, FormControl, Switch, Grid, FormGroup, Checkbox, FormHelperText, Dialog, DialogTitle, DialogContent, DialogActions, Divider } from "@material-ui/core";
 import PublishIcon from '@material-ui/icons/Publish';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { makeStyles } from "@material-ui/core";
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -30,6 +32,11 @@ const LANGUAGES = ['en', 'fr', 'de', 'it'];
 
 export default function AccountForm({ account, setAccount, skill, setSkill, skills, setSkills, addSkill, deleteSkill, categories, handleSubmit, error, setError }) {
     const classes = useStyles();
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleShowPassword= () =>{
+        setShowPassword(!showPassword)
+    }
 
     return (
         <Container>
@@ -77,7 +84,8 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                                     firstname: e.target.value
                                 }
                             ))}
-                            error={error.firstname}
+                            error={error.firstname[0]}
+                            helperText = {error.firstname[0] && error.firstname[1]}
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -94,7 +102,8 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                                     lastname: e.target.value
                                 }
                             ))}
-                            error={error.lastname}
+                            error={error.lastname[0]}
+                            helperText = {error.lastname[0] && error.lastname[1]}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -110,7 +119,8 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                                     address: e.target.value
                                 }
                             ))}
-                            error={error.address}
+                            error={error.address[0]}
+                            helperText = {error.address[0] && error.address[1]}
                         />
                     </Grid>
                     <Grid item xs={3}>
@@ -126,7 +136,8 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                                     zip: e.target.value
                                 }
                             ))}
-                            error={error.zip}
+                            error={error.zip[0]}
+                            helperText = {error.zip[0] && error.zip[1]}
                         />
                     </Grid>
                     <Grid item xs={9}>
@@ -142,7 +153,8 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                                     city: e.target.value
                                 }
                             ))}
-                            error={error.city}
+                            error={error.city[0]}
+                            helperText = {error.city[0] && error.city[1]}
                         />
                     </Grid>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -163,7 +175,8 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                                         birthdate: date
                                     }
                                 ))}
-                                error={error.birthdate}
+                                error={error.birthdate[0]}
+                                helperText = {error.birthdate[0] && error.birthdate[1]}
                             />
                         </Grid>
                     </MuiPickersUtilsProvider>
@@ -180,7 +193,8 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                                     email: e.target.value
                                 }
                             ))}
-                            error={error.email}
+                            error={error.email[0]}
+                            helperText = {error.email[0] && error.email[1]}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -189,7 +203,7 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                             label="Password"
                             variant="outlined"
                             fullWidth
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             className={classes.field}
                             onChange={(e) => setAccount(prevState => (
                                 {
@@ -197,7 +211,20 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                                     password: e.target.value
                                 }
                             ))}
-                            error={error.password}
+                            InputProps={{ 
+                                endAdornment: (
+                                  <InputAdornment position="end">
+                                    <IconButton
+                                      onClick={handleShowPassword}
+                                      onMouseDown={handleShowPassword}
+                                    >
+                                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                  </InputAdornment>
+                                )
+                              }}
+                            error={error.password[0]}
+                            helperText = {error.password[0] && error.password[1]}
                         />
                     </Grid>
                     <Grid item xs={12} sm={8}>
@@ -214,7 +241,8 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                                     phone: e.target.value
                                 }
                             ))}
-                            error={error.phone}
+                            error={error.phone[0]}
+                            helperText = {error.phone[0] && error.phone[1]}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -231,8 +259,8 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                                     ahv: e.target.value
                                 }
                             ))}
-                            maxLen={13}
-                            error={error.ahv}
+                            error={error.ahv[0]}
+                            helperText = {error.ahv[0] && error.ahv[1]}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -248,7 +276,8 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                                     iban: e.target.value
                                 }
                             ))}
-                            error={error.iban}
+                            error={error.iban[0]}
+                            helperText = {error.iban[0] && error.iban[1]}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -293,7 +322,8 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                                     salary: e.target.value
                                 }
                             ))}
-                            error={error.salary}
+                            error={error.salary[0]}
+                            helperText = {error.salary[0] && error.salary[1]}
                         />
                         {account.isFullTime ? 'CHF / Month' : 'CHF / Hour'}
                     </Grid>
@@ -315,7 +345,8 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                                         start: date
                                     }
                                 ))}
-                                error={error.start}
+                                error={error.start[0]}
+                                helperText = {error.start[0] && error.start[1]}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -335,7 +366,8 @@ export default function AccountForm({ account, setAccount, skill, setSkill, skil
                                         end: date
                                     }
                                 ))}
-                                error={error.end}
+                                error={error.end[0]}
+                                helperText = {error.end[0] && error.end[1]}
                             />
                         </Grid>
                     </MuiPickersUtilsProvider>

@@ -1,17 +1,23 @@
-import React, { useState } from 'react'
-import { Grid, Typography, TextField, Paper, Avatar, Button } from '@material-ui/core'
+import React, { useState, useEffect } from 'react'
+import { InputAdornment, IconButton, Grid, Typography, TextField, Paper, Avatar, Button } from '@material-ui/core'
 import { makeStyles } from "@material-ui/core";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from 'react-router-dom';
 import { green } from '@material-ui/core/colors';
 import request from '../utils/request';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        paddingTop: 80,
+    },
     paper: {
         padding: 20,
-        height: 350,
-        width: 200,
+
+        width: 250,
         margin: '20px auto'
     },
     avatar: {
@@ -40,65 +46,133 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }));
+const ERROR = {
+    email: [false, ""],
+    password: [false, ""],
+}
 
-export default function Login() {
+const LOGIN = {
+    id: 0,
+    email: "",
+    password: ""
+}
+
+//form validation
+function formValuesCheck(login, setError) {
+    //reset Errors
+    setError(ERROR)
+
+    let isOk = true;
+
+    let eMail = [false, ""];
+    const validMail = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
+
+    /*if (accounts.filter(a => a.email === login.email).length > 0) {
+        eMail = [true, "email already in use"];
+    }*/
+    if (!validMail.test(login.email)) {
+        eMail = [true, "must be email format e.g. hans.muster@mail.ch"];
+    }
+    if (login.email == '') {
+        eMail = [true, "empty"];
+    }
+    if (login.email.length > 255) {
+        eMail = [true, "Max length 255 character" + " | Remove " + (login.email.length - 255) + " character(s)"];
+    }
+    if (eMail[0]) {
+        setError((prevState) => ({
+            ...prevState,
+            email: eMail,
+        }))
+        isOk = false;
+    }
+
+    let ePassword = [false, ""];
+    const validPassword = new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$');
+
+    /*if (!validPassword.test(login.password)) {
+        ePassword = [true, "min 8 char, [A-Z], [a-z], [#?!@$%^&*-] "];
+    }*/
+    if (login.password == '') {
+        ePassword = [true, "empty"];
+    }
+    if (ePassword[0]) {
+        setError((prevState) => ({
+            ...prevState,
+            password: ePassword,
+        }))
+        isOk = false;
+    }
+    return isOk;
+}
+
+export default function Login({ setIsLoggedIn, setIsAdmin }) {
     const history = useHistory();
     const classes = useStyles();
-    const [login, setLogin] = useState({
-        id: 0,
-        email: "",
-        password: ""
-    })
-    const [error, setError] = useState({
-        email: false,
-        password: false
-    })
+    const [login, setLogin] = useState(LOGIN)
+    const [error, setError] = useState(ERROR)
     const [isLoading, setIsLoading] = useState(false)
+    const [showPassword, setShowPassword] = useState(false);
+    const [apiErrorMessage, setApiErrorMessage] = useState(null);
+
+    const handleShowPassword = () => {
+        setShowPassword(!showPassword)
+    }
+
+    //instant form validation
+    useEffect(() => {
+        formValuesCheck(login, setError);
+    }, [login])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        //reset errors
-        setError((prevState) => ({
-            ...prevState,
-            email: false,
-            password: false,
-        }))
-
-        //checks
-        if (login.email == '') {
-            setError((prevState) => ({
-                ...prevState,
-                email: true,
-            }))
-        }
-        if (login.password == '') {
-            setError((prevState) => ({
-                ...prevState,
-                password: true,
-            }))
-        }
-
-        if (login.email !== '' && login.passowrd !== '' && !isLoading) {
+        //Form validation after submit
+        if (formValuesCheck(login, setError)) {
             let body = JSON.stringify(login);
             setIsLoading(true)
+
             let response = await request(
                 'https://localhost:5001/login',
                 "POST",
-                body);
-            console.log("response: ", response)
-            setIsLoading(false)
-            setLogin(()=>({
-                email: "",
-                password: ""
-            }))
-            history.push('/')
+                body, setApiErrorMessage, "");
+
+            //login successful?     
+            if (!(response == null || response == undefined)) {
+                localStorage.setItem("user", JSON.stringify(response))
+                var token = parseJwt(response.token);
+
+                //set Logged User
+                setIsLoggedIn(true);
+                setIsAdmin(false);
+                if (token.actort === 'admin'){
+                    setIsAdmin(true);
+                }
+
+                //reset
+                setIsLoading(false);
+                setApiErrorMessage(null);
+                setLogin(() => ({
+                    email: "",
+                    password: ""
+                }
+                ))
+                history.push('/profile')
+            } else {
+                //Errors
+                setApiErrorMessage("Invalid Credentials");
+                setError({ email: [true, ""], password: [true, ""] })
+                //reset
+                setIsLoading(false);
+            }
         }
     }
 
     return (
-        <Grid container>
+        <Grid container className={classes.root}>
+
             <Paper elevation={10} className={classes.paper} >
+
                 <Grid item xs={12} align={'center'} className={classes.item}>
                     <Avatar className={classes.avatar}>
                         <LockOutlinedIcon />
@@ -109,6 +183,10 @@ export default function Login() {
                         Sign in
                     </Typography>
                 </Grid>
+                {apiErrorMessage &&
+                    <Grid item xs={12} className={classes.item} align="center">
+                        <Alert severity="error" >{apiErrorMessage} </Alert>
+                    </Grid>}
                 {isLoading ?
                     <Grid item xs={12} className={classes.item} align="center">
                         <CircularProgress size={24} />
@@ -117,9 +195,12 @@ export default function Login() {
                     <>
                         <Grid item xs={12} className={classes.item}>
                             <TextField
+                                value={login.email}
                                 label={"Username"}
+                                variant="standard"
                                 placeholder={"hans.muster@mail.com"}
                                 required
+                                fullWidth
                                 onChange={(e) => setLogin(prevState => (
                                     {
                                         ...prevState,
@@ -127,23 +208,39 @@ export default function Login() {
                                     }
                                 ))
                                 }
-                                error={error.email}
+                                error={error.email[0]}
+                                helperText={error.email[0] && error.email[1]}
                             />
                         </Grid>
                         <Grid item xs={12} className={classes.item}>
                             <TextField
-                                type="password"
-                                label={"Password"}
-                                placeholder={"myStron6Pwd$"}
+                                value={login.password}
+                                label="Password"
+                                variant="standard"
+                                fullWidth
                                 required
+                                type={showPassword ? "text" : "password"}
+                                className={classes.field}
                                 onChange={(e) => setLogin(prevState => (
                                     {
                                         ...prevState,
                                         password: e.target.value
                                     }
-                                ))
-                                }
-                                error={error.password}
+                                ))}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={handleShowPassword}
+                                                onMouseDown={handleShowPassword}
+                                            >
+                                                {showPassword ? <Visibility /> : <VisibilityOff />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }}
+                                error={error.password[0]}
+                                helperText={error.password[0] && error.password[1]}
                             />
                         </Grid>
                     </>
@@ -164,4 +261,12 @@ export default function Login() {
         </Grid>
     )
 }
+
+function parseJwt(token) {
+    if (!token) { return; }
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
+}
+
 

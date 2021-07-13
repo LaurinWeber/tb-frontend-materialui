@@ -1,11 +1,14 @@
-import { makeStyles, ThemeProvider, Typography } from '@material-ui/core';
-import React from 'react'
-import { Drawer, Topography, List, ListItem, ListItemIcon, ListItemText, AppBar, Toolbar, Avatar } from '@material-ui/core'
+import { makeStyles, IconButton, ThemeProvider, Typography } from '@material-ui/core';
+import React, { useEffect, useState } from 'react'
+import { Drawer, Topography, Menu, MenuItem, List, ListItem, ListItemIcon, ListItemText, AppBar, Toolbar, Avatar } from '@material-ui/core'
 import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import { useHistory, useLocation } from 'react-router-dom';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import App from '../App';
+import PrivateMenu from './PrivateMenu';
+import PublicMenu from './PublicMenu';
 
 const drawerWidth = 240
 
@@ -32,94 +35,44 @@ const useStyles = makeStyles((theme) => {
         title: {
             padding: theme.spacing(3)
         },
-        appbar:{
+        appbar: {
             width: `calc(100% - ${drawerWidth}px)`
         },
         toolbar: theme.mixins.toolbar,
         toolLeft: {
             flexGrow: 1,
         },
-        avatar:{
+        avatar: {
             marginLeft: theme.spacing(2)
         }
     }
 })
 
-export default function Layout({ children }) {
+export default function Layout({ children, setIsLoggedIn, isLoggedIn, setIsAdmin, isAdmin }) {
     const classes = useStyles();
     const history = useHistory();
     const location = useLocation();
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const isMenuOpen = Boolean(anchorEl);
 
-    const menuItems = [
-        {
-            text: 'Accounts',
-            icon: <PeopleAltOutlinedIcon color={"secondary"} />,
-            path: '/'
+    useEffect(() => {
 
-        },
-        {
-            text: 'Groups',
-            icon: <LocalOfferOutlinedIcon color={"secondary"} />,
-            path: '/login'
-
-        },
-        {
-            text: 'Calendar',
-            icon: <CalendarTodayIcon color={"secondary"} />,
-            path: '/calendar'
-
+        console.log("Layout-Mount")
+        console.log("is Logged In", isLoggedIn)
+        return () => {
+            console.log("Un-Mount")
         }
-    ]
+    }, [])
 
     return (
-        <div className={classes.root}>
-            {/*app bar*/}
-            <AppBar className={classes.appbar} elevation={0} color={"white"}>
-                <Toolbar>
-                    <Typography className={classes.toolLeft}> 
-                        
-                    </Typography>
-                    <Typography> 
-                        Laurin
-                    </Typography>
-                    <Avatar src="" className={classes.avatar}/>
-                </Toolbar>
-            </AppBar>
 
-            {/*side drawer*/}
-            <Drawer
-                className={classes.drawer}
-                variant={'permanent'}
-                anchor='left'
-                classes={{ paper: classes.drawerPaper }}
-            >
-                <Typography variant='h5' className={classes.title}>
-                    EnjoyTheRide
-                 </Typography>
-
-                {/* list / links */}
-                <List>
-                    {menuItems.map(item => (
-                        <ListItem
-                            key={item.text}
-                            button
-                            onClick={() => history.push(item.path)}
-                            className={location.pathname == item.path ? classes.active : null}
-                        >
-                            <ListItemIcon >{item.icon}</ListItemIcon>
-                            <ListItemText primary={item.text} />
-                        </ListItem>
-                    ))}
-                </List>
-            </Drawer>
-
-
-
-            <div className={classes.page}>
-                <div className={classes.toolbar}></div>
-                {children}
-            </div>
-
+        <div>
+            {
+            isLoggedIn ?
+                <PrivateMenu children={children} setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} isAdmin={isAdmin} />
+                :
+                <PublicMenu children={children} setIsLoggedIn={setIsLoggedIn} />
+            }
         </div>
     )
 }
