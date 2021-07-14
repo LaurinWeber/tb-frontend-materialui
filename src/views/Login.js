@@ -9,14 +9,26 @@ import request from '../utils/request';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Alert from '@material-ui/lab/Alert';
+import Footer from '../components/Footer'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        paddingTop: 80,
+        height: '88vh',
+        maxHeight: '100%',
+        marginTop: '80px',
+        margin: 0,
+        padding: 0,
+        maxWidth: '100%',
+        width: '100vw',
+    },
+    wrapper: {
+        minHeight:'100vh',
+        height: '100vh',
+        maxWidth: '100%',
+        width: '100vw',
     },
     paper: {
         padding: 20,
-
         width: 250,
         margin: '20px auto'
     },
@@ -145,7 +157,7 @@ export default function Login({ setIsLoggedIn, setIsAdmin }) {
                 //set Logged User
                 setIsLoggedIn(true);
                 setIsAdmin(false);
-                if (token.actort === 'admin'){
+                if (token.actort === 'admin') {
                     setIsAdmin(true);
                 }
 
@@ -169,96 +181,97 @@ export default function Login({ setIsLoggedIn, setIsAdmin }) {
     }
 
     return (
-        <Grid container className={classes.root}>
-
-            <Paper elevation={10} className={classes.paper} >
-
-                <Grid item xs={12} align={'center'} className={classes.item}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                </Grid>
-                <Grid item xs={12} align={'center'} className={classes.item}>
-                    <Typography variant="h5">
-                        Sign in
-                    </Typography>
-                </Grid>
-                {apiErrorMessage &&
-                    <Grid item xs={12} className={classes.item} align="center">
-                        <Alert severity="error" >{apiErrorMessage} </Alert>
-                    </Grid>}
-                {isLoading ?
-                    <Grid item xs={12} className={classes.item} align="center">
-                        <CircularProgress size={24} />
+        <div className={classes.root}>
+            <Grid container className={classes.wrapper}>
+                <Paper elevation={10} className={classes.paper} >
+                    <Grid item xs={12} align={'center'} className={classes.item}>
+                        <Avatar className={classes.avatar}>
+                            <LockOutlinedIcon />
+                        </Avatar>
                     </Grid>
-                    :
-                    <>
-                        <Grid item xs={12} className={classes.item}>
-                            <TextField
-                                value={login.email}
-                                label={"Username"}
-                                variant="standard"
-                                placeholder={"hans.muster@mail.com"}
-                                required
-                                fullWidth
-                                onChange={(e) => setLogin(prevState => (
-                                    {
-                                        ...prevState,
-                                        email: e.target.value
-                                    }
-                                ))
-                                }
-                                error={error.email[0]}
-                                helperText={error.email[0] && error.email[1]}
-                            />
+                    <Grid item xs={12} align={'center'} className={classes.item}>
+                        <Typography variant="h5">
+                            Sign in
+                        </Typography>
+                    </Grid>
+                    {apiErrorMessage &&
+                        <Grid item xs={12} className={classes.item} align="center">
+                            <Alert severity="error" >{apiErrorMessage} </Alert>
+                        </Grid>}
+                    {isLoading ?
+                        <Grid item xs={12} className={classes.item} align="center">
+                            <CircularProgress size={24} />
                         </Grid>
-                        <Grid item xs={12} className={classes.item}>
-                            <TextField
-                                value={login.password}
-                                label="Password"
-                                variant="standard"
-                                fullWidth
-                                required
-                                type={showPassword ? "text" : "password"}
-                                className={classes.field}
-                                onChange={(e) => setLogin(prevState => (
-                                    {
-                                        ...prevState,
-                                        password: e.target.value
+                        :
+                        <>
+                            <Grid item xs={12} className={classes.item}>
+                                <TextField
+                                    value={login.email}
+                                    label={"Username"}
+                                    variant="standard"
+                                    placeholder={"hans.muster@mail.com"}
+                                    required
+                                    fullWidth
+                                    onChange={(e) => setLogin(prevState => (
+                                        {
+                                            ...prevState,
+                                            email: e.target.value
+                                        }
+                                    ))
                                     }
-                                ))}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={handleShowPassword}
-                                                onMouseDown={handleShowPassword}
-                                            >
-                                                {showPassword ? <Visibility /> : <VisibilityOff />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    )
-                                }}
-                                error={error.password[0]}
-                                helperText={error.password[0] && error.password[1]}
-                            />
-                        </Grid>
-                    </>
-                }
-                <Grid item xs={12} className={classes.item}>
-                    <Button
-                        type='submit'
-                        color='primary'
-                        variant='contained'
-                        fullWidth
-                        onClick={handleSubmit}
-                    >
+                                    error={error.email[0]}
+                                    helperText={error.email[0] && error.email[1]}
+                                />
+                            </Grid>
+                            <Grid item xs={12} className={classes.item}>
+                                <TextField
+                                    value={login.password}
+                                    label="Password"
+                                    variant="standard"
+                                    fullWidth
+                                    required
+                                    type={showPassword ? "text" : "password"}
+                                    className={classes.field}
+                                    onChange={(e) => setLogin(prevState => (
+                                        {
+                                            ...prevState,
+                                            password: e.target.value
+                                        }
+                                    ))}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    onClick={handleShowPassword}
+                                                    onMouseDown={handleShowPassword}
+                                                >
+                                                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        )
+                                    }}
+                                    error={error.password[0]}
+                                    helperText={error.password[0] && error.password[1]}
+                                />
+                            </Grid>
+                        </>
+                    }
+                    <Grid item xs={12} className={classes.item}>
+                        <Button
+                            type='submit'
+                            color='primary'
+                            variant='contained'
+                            fullWidth
+                            onClick={handleSubmit}
+                        >
 
-                        Sign In
-                    </Button>
-                </Grid>
-            </Paper>
-        </Grid>
+                            Sign In
+                        </Button>
+                    </Grid>
+                </Paper>
+            </Grid>
+            {/*<Footer></Footer>*/}
+        </div>
     )
 }
 

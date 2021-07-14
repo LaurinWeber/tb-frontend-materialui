@@ -141,7 +141,7 @@ function validateAhv(number) {
 }
 
 //form validation
-function formValuesCheck(account, accounts, setError) {
+function formValuesCheck(account, accounts, setError, isNew) {
     //reset Errors
     setError(ERROR)
 
@@ -251,9 +251,10 @@ function formValuesCheck(account, accounts, setError) {
 
     let eMail = [false, ""];
     const validMail = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
-
-    if (accounts.filter(a => a.email === account.email).length > 0) {
-        eMail = [true, "email already in use"];
+    if (isNew) {
+        if (accounts.filter(a => a.email === account.email).length > 0) {
+            eMail = [true, "email already in use"];
+        }
     }
     if (!validMail.test(account.email)) {
         eMail = [true, "must be email format e.g. hans.muster@mail.ch"];
@@ -454,14 +455,14 @@ export default function Accounts() {
 
     //instant form validation
     useEffect(() => {
-        formValuesCheck(account, accounts, setError);
+        formValuesCheck(account, accounts, setError, isNew);
     }, [account])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         //Form validation after submit
-        if (formValuesCheck(account, accounts, setError)) {
+        if (formValuesCheck(account, accounts, setError, isNew)) {
             //get token
             let token = JSON.parse(localStorage.getItem("user")).token;
             //get data
@@ -483,8 +484,8 @@ export default function Accounts() {
                     "PUT",
                     body, setApiErrorMessage, token);
 
-                if (response != null || response != undefined) {
-                    history.push('/')
+                if (response) {
+                    history.push('/accounts')
                 }
             }
             //Toggle view and reset values
@@ -520,11 +521,13 @@ export default function Accounts() {
         let response = await request(
             'https://localhost:5001/account/' + id,
             "DELETE", null, setApiErrorMessage, token);
-
-        console.log("response: ", response)
+        //only if deletion was succssfull
+        if(response){
         //do not display deleted item
         const newAccounts = accounts.filter(account => account.accountID != id);
         setAccounts(newAccounts);
+        }
+
     }
 
     return (

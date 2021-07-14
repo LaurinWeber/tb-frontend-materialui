@@ -12,6 +12,8 @@ import Login from './views/Login';
 import react, { useState, useEffect } from 'react';
 import Page404 from './views/errors/Page404';
 import ErrorHandler from './utils/ErrorHandler'
+import Booking from './views/customer/Booking';
+import Payment from './views/customer/Payment'
 
 
 
@@ -50,50 +52,56 @@ function App() {
 
     console.log("Layout-Mount")
 
-  return () => {
-    console.log("Un-Mount")
-  }
-}, [])
+    return () => {
+      console.log("Un-Mount")
+    }
+  }, [])
 
-return (
-  <ThemeProvider theme={theme}>
-    <Router>
+  return (
+    <ThemeProvider theme={theme}>
+      <Router>
 
-      <Layout isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} isAdmin={isAdmin}>
-        <ErrorHandler>
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route exact path="/login" >
-              <Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />
-            </Route>
-            {
-              isLoggedIn &&
-              <>
-                <Route exact path="/accounts">
-                  <Accounts />
-                </Route>
-                <Route exact path="/groups" >
-                  <Groups></Groups>
-                </Route>
-                <Route exact path="/calendar" >
-                  <Calendar isLoggedIn={isLoggedIn} />
-                </Route>
-                <Route exact path="/profile" >
-                  <Profile/>
-                </Route>
-              </>
-            }
-            <Route path="*" >
-              <Page404 />
-            </Route>
-          </Switch>
-        </ErrorHandler>
-      </Layout>
-    </Router>
-  </ThemeProvider>
-);
+        <Layout isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} isAdmin={isAdmin}>
+          <ErrorHandler>
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route exact path="/booking">
+                <Booking />
+              </Route>
+              <Route exact path="/payment">
+                <Payment />
+              </Route>
+              <Route exact path="/login" >
+                <Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />
+              </Route>
+              {
+                isLoggedIn &&
+                <>
+                  <Route exact path="/accounts">
+                    <Accounts />
+                  </Route>
+                  <Route exact path="/groups" >
+                    <Groups></Groups>
+                  </Route>
+                  <Route exact path="/calendar" >
+                    <Calendar isLoggedIn={isLoggedIn} />
+                  </Route>
+                  <Route exact path="/profile" >
+                    <Profile />
+                  </Route>
+                </>
+              }
+              <Route path="*" >
+                <Page404 />
+              </Route>
+            </Switch>
+          </ErrorHandler>
+        </Layout>
+      </Router>
+    </ThemeProvider>
+  );
 }
 
 function parseJwt(token) {

@@ -38,9 +38,11 @@ export default async function (url, method = 'GET', body, setApiErrorMessage, to
         if (!response.ok) {
             throw Error(response.status);
         } else {
+
             let data = await response.json()
             return data;
         }
+     
 
     } catch (e) {
         if (setApiErrorMessage != null) {

@@ -10,6 +10,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import App from '../App';
 
 const drawerWidth = 240
+//marginLeft: width -drawerWidth
 
 const useStyles = makeStyles((theme) => {
 
@@ -17,16 +18,18 @@ const useStyles = makeStyles((theme) => {
         pageShift: {
             background: '#f7f7f7',
             width: '100%',
-            padding: theme.spacing(3),
+            margin:0,
+            padding: 0,
             marginLeft: -drawerWidth
         },
         page: {
             background: '#f7f7f7',
             width: '100%',
-            padding: theme.spacing(3),
+            margin:0,
+            padding: 0,
         },
         menuItem:{
-            padding: 10,
+            padding: 0,
             marginRight: 30
         },
         drawer: {
@@ -37,21 +40,31 @@ const useStyles = makeStyles((theme) => {
             paddingTop: 64
         },
         root: {
+            margin:0,
+            padding: 0,
             display: 'flex'
         },
         active: {
             background: '#f3f3f3f3'
         },
         title: {
-            padding: theme.spacing(3),
+            paddingLeft:theme.spacing(3),
             flexGrow: 1,
         },
         appbar: {
-            zIndex: theme.zIndex.drawer + 1
+            zIndex: theme.zIndex.drawer + 1,
+            height: '65px',
+            margin: 0,
+            padding: 0
+        },
+        toolbar: {
+            margin: 0,
+            padding: 0
         },
         right: {
             display: 'flex',
-            alignContent: 'left'
+            alignContent: 'left',
+            paddingRight:theme.spacing(3),
 
         },
     }
@@ -106,7 +119,7 @@ export default function PublicMenu({ children}) {
         <div className={classes.root}>
             {/*app bar*/}
             <AppBar className={classes.appbar} elevation={0} color={"secondary"}>
-                <Toolbar>
+                <Toolbar className={classes.toolbar}>
                     <Typography className={classes.title} onClick={() => history.push('/')}>
                         EnjoyTheRide
                     </Typography>
