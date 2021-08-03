@@ -10,8 +10,10 @@ import Login from './views/Login';
 import { useState, useEffect } from 'react';
 import Page404 from './views/errors/Page404';
 import Booking from './views/customer/Booking';
-import Payment from './views/customer/Payment';
+import Payment from './views/customer/Payment'
 import ProtectedRoute from './components/ProtectedRoute';
+
+
 
 //define theme of the app
 const theme = createMuiTheme({
@@ -25,14 +27,36 @@ const theme = createMuiTheme({
   }
 })
 
-//app component
+const OFFERREQUEST = {
+  isCertified: true,
+  Activity: "",
+  Type: "",
+  Hours: 0,
+  Level: "",
+  Language: "",
+  Gender: "",
+}
+const CARTITEM = {
+  Title: "",
+  Level: "",
+  Language: "",
+  Location:"",
+  Participants: [],
+  Selection: [],
+  TotalHours:0.0,
+  TotalPrice:0.0,
+}
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [offerRequest, setOfferRequest] = useState(OFFERREQUEST);
+  const [cart, setCart] = useState(CARTITEM);
 
   //check if the user is still logged in => adapt the layout
   useEffect(() => {
-    //should also check if token is still valid otherwise automatical log out!
+    //should also check if token is still valid otherwise automatical log out! (REFRESH TOKEN..)
+
     var user = JSON.parse(localStorage.getItem('user'));
     if (user != null || user != undefined) {
       var token = parseJwt(user.token);
@@ -50,25 +74,25 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Layout isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} isAdmin={isAdmin}>
+
+        <Layout isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} isAdmin={isAdmin} cart={cart} setCart={setCart} >
             <Switch>
               <Route exact path="/">
-                <Home />
+                <Home setOfferRequest={setOfferRequest}/>
               </Route>
               <Route exact path="/booking">
-                <Booking />
+                <Booking setOfferRequest={setOfferRequest} offerRequest={offerRequest} cart={cart} setCart={setCart}/>
               </Route>
               <Route exact path="/payment">
-                <Payment />
+                <Payment cart={cart} setCart={setCart}/>
               </Route>
               <Route exact path="/login" >
                 <Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />
               </Route>
-              <ProtectedRoute component={Accounts}/>
-              <ProtectedRoute component={Groups}/>
-              <ProtectedRoute component={Calendar}/>
-              <ProtectedRoute component={Profile}/>
-              {/*path that do not exists = 404 */}
+              <ProtectedRoute exact path="/accounts" component={Accounts}/>
+              <ProtectedRoute exact path="/groups" component={Groups}/>
+              <ProtectedRoute exact path="/calendar" component={Calendar}/>
+              <ProtectedRoute exact path="/profile" component={Profile}/>
               <Route path="*" >
                 <Page404 />
               </Route>

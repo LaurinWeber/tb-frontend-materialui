@@ -4,6 +4,7 @@ import { ViewState, EditingState, IntegratedEditing } from '@devexpress/dx-react
 import {
     Scheduler,
     DayView,
+    AllDayPanel,
     WeekView,
     Toolbar,
     ViewSwitcher,
@@ -12,150 +13,13 @@ import {
     AppointmentForm,
     MonthView,
     DragDropProvider,
-    ConfirmationDialog,
     DateNavigator,
     TodayButton
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { Grid } from '@material-ui/core';
 import request from '../../utils/request';
 
-const selectOptions = [
-    {
-        id: "1",
-        text: 'Beginner',
-    },
-    {
-        id: "2",
-        text: 'Advanced',
-    },
-    {
-        id: "3",
-        text: 'Professional',
-    }
-];
-
-const statusOptions = [
-    {
-        id: "1",
-        text: 'Available',
-    },
-    {
-        id: "2",
-        text: 'Blocked',
-    },
-    {
-        id: "3",
-        text: 'Locked',
-    },
-    {
-        id: "3",
-        text: 'Booked',
-    }
-];
-
-const schedulerData = [
-    {
-        id: "1",
-        title: 'SKI - Private Lesson',
-        startDate: new Date('2021-07-11 10:12:50'),
-        endDate: new Date('2021-07-11 10:14:50'),
-        notes: "Angela 12 and Marta 13 are Beginner at Arnouva",
-        status: "1"
-    },
-    {
-        id: "2",
-        title: 'Group SKI lesson',
-        startDate: new Date(2021, 0, 15, 9, 0),
-        endDate: new Date(2021, 0, 15, 12, 0),
-        isValidated: false,
-        location: "Arnouva",
-        level: {
-            id: "1",
-            text: "Beginner"
-        },
-
-        participants: 2,
-        description: "Angela 12 and Marta 13"
-    }
-];
-
-
-//Customize the Appointmentform
-const messages = {
-    moreInformationLabel: '',
-};
-
-const TextEditor = (props) => {
-    // eslint-disable-next-line react/destructuring-assignment
-    /* if (props.type === 'titleTextEditor') {
-         return null;
-     }*/
-    if (props.type === 'multilineTextEditor') {
-        return null;
-    }
-
-    return <AppointmentForm.TextEditor {...props} />;
-};
-
-const LabelEditor = (props) => {
-    // eslint-disable-next-line react/destructuring-assignment
-    /* if (props.type === 'titleTextEditor') {
-         return null;
-     }*/
-    if (props.type === 'title') {
-        return null;
-    }
-
-    return <AppointmentForm.TextEditor {...props} />;
-};
-
-const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
-    const onDescriptionFieldChange = (nextValue) => {
-        onFieldChange({ description: nextValue });
-    };
-    const onStatusChange = (nextValue) => {
-        onFieldChange({ status: nextValue });
-    };
-
-    return (
-        <AppointmentForm.BasicLayout
-            appointmentData={appointmentData}
-            onFieldChange={onFieldChange}
-            fullSize
-            {...restProps}
-        >
-            <AppointmentForm.Select
-                value={appointmentData.status}
-                onValueChange={onStatusChange}
-                availableOptions={statusOptions}
-            />
-            {/* 
-            <AppointmentForm.Label
-                text="Description"
-                type="title"
-            />
-            <AppointmentForm.TextEditor
-                value={appointmentData.description}
-                type={'multilineTextEditor'}
-                onValueChange={onDescriptionFieldChange}
-                placeholder="Description"
-            />
-            <Grid item xs={6}>
-                <AppointmentForm.Label
-                    text="Level"
-                    type="title"
-                />
-                <AppointmentForm.Select
-                    value={appointmentData.level}
-                    onValueChange={onSelectFieldChange}
-                    availableOptions={selectOptions}
-                />
-            </Grid>*/}
-        </AppointmentForm.BasicLayout>
-    );
-};
-
-
+/*calendar component for the employees from => @devexpress library */
 export default function Calendar({ isLoggedIn }) {
     const [data, setData] = useState([]);
     const [changedAppointment, setChangedAppointment] = useState();
@@ -173,8 +37,8 @@ export default function Calendar({ isLoggedIn }) {
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")))
 
+    //handle CRUD operations to the backend, on
     useEffect(() => {
-
         async function fetchMyAPI() {
             //get token
             let token = JSON.parse(localStorage.getItem("user")).token;
@@ -240,6 +104,7 @@ export default function Calendar({ isLoggedIn }) {
         allowAdding, allowDeleting, allowUpdating, allowResizing, allowDragging,
     } = editingOptions;
 
+        /*source: https://devexpress.github.io/devextreme-reactive/react/scheduler/docs/guides/getting-started/ */
     const onCommitChanges = React.useCallback(({ added, changed, deleted }) => {
         var user = JSON.parse(localStorage.getItem('user'))
         if (added) {
@@ -288,6 +153,7 @@ export default function Calendar({ isLoggedIn }) {
         });
     });
 
+    /*source: https://devexpress.github.io/devextreme-reactive/react/scheduler/docs/guides/getting-started/ */
     const TimeTableCell = React.useCallback(React.memo(({ onDoubleClick, ...restProps }) => (
         <WeekView.TimeTableCell
             {...restProps}
@@ -295,6 +161,7 @@ export default function Calendar({ isLoggedIn }) {
         />
     )), [allowAdding]);
 
+        /*source: https://devexpress.github.io/devextreme-reactive/react/scheduler/docs/guides/getting-started/ */
     const CommandButton = React.useCallback(({ id, ...restProps }) => {
 
         if (id === 'deleteButton') {
@@ -312,27 +179,6 @@ export default function Calendar({ isLoggedIn }) {
         [allowResizing, allowUpdating],
     );
 
-    /*
-        console.log(schedulerData)
-    
-        const commitChanges = ({ added, changed, deleted }) => {
-            this.setState((state) => {
-                let { data } = state;
-                if (added) {
-                    const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
-                    data = [...data, { id: startingAddedId, ...added }];
-                }
-                if (changed) {
-                    data = data.map(appointment => (
-                        changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
-                }
-                if (deleted !== undefined) {
-                    data = data.filter(appointment => appointment.id !== deleted);
-                }
-                return { data };
-            });
-        }
-    */
     return (
         <div>
             <Grid container>
@@ -374,13 +220,13 @@ export default function Calendar({ isLoggedIn }) {
                             <TodayButton />
                             <ViewSwitcher />
                             <Appointments />
+                            <AllDayPanel/>
                             <AppointmentTooltip
                                 showCloseButton
                                 showOpenButton
                                 showDeleteButton
                             />
                             <AppointmentForm
-                                basicLayoutComponent={BasicLayout}
                                 commandButtonComponent={CommandButton}
                                 readOnly={isAppointmentBeingCreated ? false : !allowUpdating}
                             />

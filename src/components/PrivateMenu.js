@@ -1,15 +1,16 @@
-import { makeStyles, IconButton, ThemeProvider, Typography } from '@material-ui/core';
+import { makeStyles, IconButton, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
-import { Drawer, Topography, Menu, MenuItem, List, ListItem, ListItemIcon, ListItemText, AppBar, Toolbar, Avatar } from '@material-ui/core'
+import { Drawer, Menu, MenuItem, List, ListItem, ListItemIcon, ListItemText, AppBar, Toolbar, Avatar } from '@material-ui/core'
 import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import { useHistory, useLocation } from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import App from '../App';
 
+/*witdth of the cart drawer */
 const drawerWidth = 240
 
+/* styles with theme parameter allows to access theme objects */
 const useStyles = makeStyles((theme) => {
 
     return {
@@ -46,62 +47,67 @@ const useStyles = makeStyles((theme) => {
     }
 })
 
+/*menu items from the private layout, which are displayed in the drawer on the left */
 const MENUITEMS = [
     {
         text: 'Profile',
-        icon: <AccountCircleIcon color={"secondary"} />,
+        icon: <AccountCircleIcon color={"primary"} />,
         path: '/profile',
         auth: "employee"
     },
     {
         text: 'Calendar',
-        icon: <CalendarTodayIcon color={"secondary"} />,
+        icon: <CalendarTodayIcon color={"primary"} />,
         path: '/calendar',
         auth: "employee"
     },
     {
         text: 'Accounts',
-        icon: <PeopleAltOutlinedIcon color={"secondary"} />,
+        icon: <PeopleAltOutlinedIcon color={"primary"} />,
         path: '/accounts',
         auth: "admin"
     },
     {
         text: 'Groups',
-        icon: <LocalOfferOutlinedIcon color={"secondary"} />,
+        icon: <LocalOfferOutlinedIcon color={"primary"} />,
         path: '/groups',
         auth: "admin"
     },
 ]
 
 export default function PrivateMenu({ children, setIsLoggedIn, setIsAdmin, isAdmin }) {
-    const classes = useStyles();
-    const history = useHistory();
-    const location = useLocation();
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const classes = useStyles(); //apply styling
+    const history = useHistory(); //needed to change url
+    const location = useLocation(); //needed to define where in the menu the user is, to change background color
+    const [anchorEl, setAnchorEl] = React.useState(null); //needed to anchor the position of the menu
     const isMenuOpen = Boolean(anchorEl);
-    const [menu, setMenu] = useState(MENUITEMS.filter(item => item.auth === 'employee'));
+    const [menu, setMenu] = useState(MENUITEMS.filter(item => item.auth === 'employee')); //depending on the user show administrator menu 
 
+    //convert the user item stored in the local storage into a JavaScript Object, to display user email in header
     var user = JSON.parse(localStorage.getItem('user'))
-    console.log(user);
 
+    //when admin is changing set the menu
     useEffect(() => {
         //initialize menu
-        if(isAdmin){
+        if (isAdmin) {
             setMenu(MENUITEMS)
         }
         return () => {
             setMenu([]);
-          };
+        };
     }, [isAdmin])
 
+    //open the menu, at the position where login button was clicked
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
+    //close the menu 
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
 
+    //remove, and reset values on logout click
     const handleLogout = () => {
         localStorage.removeItem("user");
         setIsAdmin(false)
@@ -109,6 +115,7 @@ export default function PrivateMenu({ children, setIsLoggedIn, setIsAdmin, isAdm
         setIsLoggedIn(false);
     }
 
+    //render Logout menu button
     const renderMenu = (
         <Menu
             anchorEl={anchorEl}
@@ -124,12 +131,11 @@ export default function PrivateMenu({ children, setIsLoggedIn, setIsAdmin, isAdm
         </Menu>
     );
 
-
-
+    /* */
     return (
         <div className={classes.root}>
             {/*app bar*/}
-            <AppBar className={classes.appbar} elevation={0} color={"secondary"}>
+            <AppBar className={classes.appbar} elevation={0} color={"primary"}>
                 <Toolbar>
 
                     <Typography className={classes.toolLeft} variant='h6'>
@@ -151,6 +157,7 @@ export default function PrivateMenu({ children, setIsLoggedIn, setIsAdmin, isAdm
             </AppBar>
             {renderMenu}
 
+            {/*Menu, drawer on the left */}
             <Drawer
                 className={classes.drawer}
                 variant={'permanent'}
@@ -176,6 +183,7 @@ export default function PrivateMenu({ children, setIsLoggedIn, setIsAdmin, isAdm
                     ))}
                 </List>
             </Drawer>
+            {/* render the childern of the layout wrapper, e.g. calendar */}
             <div className={classes.page}>
                 <div className={classes.toolbar}></div>
                 {children}

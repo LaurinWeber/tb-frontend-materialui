@@ -124,7 +124,7 @@ export default function Login({ setIsLoggedIn, setIsAdmin }) {
     const [showPassword, setShowPassword] = useState(false);
     const [apiErrorMessage, setApiErrorMessage] = useState(null);
 
-    //show the password
+    //when clicked on eye, password is shown in text fromat
     const handleShowPassword = () => {
         setShowPassword(!showPassword)
     }
@@ -179,6 +179,7 @@ export default function Login({ setIsLoggedIn, setIsAdmin }) {
         }
     }
 
+    /*render component */
     return (
         <div className={classes.root}>
             <Grid container className={classes.wrapper}>
@@ -193,7 +194,7 @@ export default function Login({ setIsLoggedIn, setIsAdmin }) {
                             Sign in
                         </Typography>
                     </Grid>
-                    {/*If error in api show error message with alert */}
+                    {/*if there is an error from the API, it is displayed to the user */}
                     {apiErrorMessage &&
                         <Grid item xs={12} className={classes.item} align="center">
                             <Alert severity="error" >{apiErrorMessage} </Alert>

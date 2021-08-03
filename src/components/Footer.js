@@ -3,6 +3,7 @@ import { Grid, Typography, IconButton, makeStyles } from '@material-ui/core'
 import InstagramIcon from '@material-ui/icons/Instagram';
 import FacebookIcon from '@material-ui/icons/Facebook';
 
+/* Footer styling */
 const useStyles = makeStyles((theme) => {
     return {
         footer: {
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme) => {
     }
 })
 
+/*footer components */
 export default function Footer() {
     const classes = useStyles();
 
@@ -26,7 +28,7 @@ export default function Footer() {
         <Grid container spacing={3} className={classes.footer}>
             <Grid item xs={12} sm={4} >
                 <Typography variant={"subtitle1"} align={"left"} className={classes.textFooter}>
-                    © RideOnGmbH 2021
+                    ©EnjoyTheRide Inc 2021
                 </Typography>
             </Grid>
             <Grid item xs={12} sm={4} >

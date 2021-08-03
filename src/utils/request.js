@@ -1,5 +1,6 @@
 import React from "react";
 
+/*Helper function that makes requests to the backend endpoints, to perform http GET, PUT, POST and DELETE operations (CRUD) */
 export default async function (url, method = 'GET', body, setApiErrorMessage, token) {
 
     try {
@@ -42,9 +43,8 @@ export default async function (url, method = 'GET', body, setApiErrorMessage, to
             let data = await response.json()
             return data;
         }
-     
-
     } catch (e) {
+        /*on error set custom api error message and show to the user*/
         if (setApiErrorMessage != null) {
             //generic error
             setApiErrorMessage(e.message);

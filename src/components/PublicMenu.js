@@ -1,54 +1,53 @@
 import { makeStyles, IconButton, ThemeProvider, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
-import { Drawer, Topography, Menu, MenuItem, Dialog, List, ListItem, ListItemIcon, ListItemText, AppBar, Toolbar, Avatar } from '@material-ui/core'
-import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
-import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import { Drawer, Topography, Divider, Menu, MenuItem, Button, AppBar, Toolbar, Avatar, Grid } from '@material-ui/core'
 import { useHistory, useLocation } from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import App from '../App';
+import logo from "../assets/img/logo_black.png"
 
-const drawerWidth = 240
-//marginLeft: width -drawerWidth
-
+const drawerWidth = 500
+/*Styling */
 const useStyles = makeStyles((theme) => {
 
     return {
         pageShift: {
-            background: '#f7f7f7',
+            background: "#ffffff",
             width: '100%',
-            margin:0,
+            margin: 0,
             padding: 0,
             marginLeft: -drawerWidth
         },
         page: {
-            background: '#f7f7f7',
+            background: "#ffffff",
             width: '100%',
-            margin:0,
+            margin: 0,
             padding: 0,
         },
-        menuItem:{
+        menuItem: {
             padding: 0,
             marginRight: 30
         },
         drawer: {
-            width: drawerWidth
+            width: drawerWidth,
+            paddingBottom: 100,
         },
         drawerPaper: {
             width: drawerWidth,
-            paddingTop: 64
+            paddingTop: 64,
+            paddingBottom: 100,
+            marginBottom: 100,
         },
         root: {
-            margin:0,
+            margin: 0,
             padding: 0,
             display: 'flex'
         },
         active: {
-            background: '#f3f3f3f3'
+            background: '#ffffff'
         },
-        title: {
-            paddingLeft:theme.spacing(3),
+        left: {
+            paddingLeft: theme.spacing(5),
             flexGrow: 1,
         },
         appbar: {
@@ -64,42 +63,73 @@ const useStyles = makeStyles((theme) => {
         right: {
             display: 'flex',
             alignContent: 'left',
-            paddingRight:theme.spacing(3),
+            paddingRight: theme.spacing(5),
 
         },
+        content: {
+            marginBottom: 160,
+        },
+        wrapper: {
+            paddingTop: 20,
+            marginBottom: 20
+        },
+        item: {
+            paddingLeft: 20,
+            paddingRight: 20,
+            paddingBottom: 20
+        },
+        cartTitle: {
+            margin: 20,
+            paddingLeft: 15,
+        },
+        divider: {
+            marginLeft: 10,
+            marginRight: 10,
+        },
+        total:{
+            padding: 35,
+        },
+        img: {
+            height: "50px",
+            width: "auto"
+        }
     }
 })
 
-export default function PublicMenu({ children}) {
+/*public menu component */
+export default function PublicMenu({ children }) {
     const classes = useStyles();
     const history = useHistory();
-    const location = useLocation();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const isMenuOpen = Boolean(anchorEl);
-    const [showCart, setShowCart] = useState(false);
+    const [anchorEl, setAnchorEl] = React.useState(null);//get position for logout button
+    const isMenuOpen = Boolean(anchorEl); //set the logout button menu
+    const [showCart, setShowCart] = useState(false);//state with boolean value that when set true shows the cart on the right
+    const [showCheckOutButton, setShowCheckOutButton] = useState(true); //state value defines if check out button was clicked
 
-    useEffect(() => {
-        console.log("Public-Mount")
-        return () => {
-            console.log("Un-Mount")
-        }
-    }, [])
-
+/*login button clicked, open menu */
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
+    //after login button click the buttons location is set to null, that it disappears
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
 
+    //toggle button
     const handleShowCart = () => {
         setShowCart(!showCart);
     }
 
+    //after login change route
     const handleLogin = () => {
         history.push('/login')
         setAnchorEl(null);
+    }
+
+    //on check out change route
+    const handleCheckOut = () => {
+        //setShowCheckOutButton(!showCheckOutButton);
+        history.push("/payment")
     }
 
 
@@ -120,15 +150,15 @@ export default function PublicMenu({ children}) {
             {/*app bar*/}
             <AppBar className={classes.appbar} elevation={0} color={"secondary"}>
                 <Toolbar className={classes.toolbar}>
-                    <Typography className={classes.title} onClick={() => history.push('/')}>
-                        EnjoyTheRide
-                    </Typography>
+                    <div className={classes.left}>
+                    <img src={logo} className={classes.img} onClick={() => history.push('/')}></img>
+                    </div>
                     <div className={classes.right}>
                         <IconButton
                             className={classes.menuItem}
                             edge="start"
                             aria-haspopup="true"
-                            color="inherit"
+                            color="primary"
                             onClick={
                                 handleShowCart
                             }
@@ -139,7 +169,7 @@ export default function PublicMenu({ children}) {
                             className={classes.MenuItem}
                             edge="start"
                             aria-haspopup="true"
-                            color="inherit"
+                            color="primary"
                             onClick={
                                 handleProfileMenuOpen
                             }
@@ -149,6 +179,7 @@ export default function PublicMenu({ children}) {
                     </div>
                 </Toolbar>
             </AppBar>
+            {/*Show cart on cart click, right drawer */}
             {showCart &&
                 <Drawer
                     className={classes.drawer}
@@ -156,12 +187,39 @@ export default function PublicMenu({ children}) {
                     anchor='right'
                     classes={{ paper: classes.drawerPaper }}
                 >
-                    <Typography variant='h5' className={classes.title}>
+                    <Typography variant='h2' className={classes.cartTitle}>
                         Cart
                     </Typography>
-
-                    {/* In future must be a card comp */}
-
+                    <Divider className={classes.divider} />
+                    {/*some data to give an example how content can be arranged */}
+                    <div className={classes.content}>
+                        <Grid container xs={12} className={classes.wrapper}>
+                            <Grid item xs={12} className={classes.item}>
+                                Cart Item
+                            </Grid>
+                        </Grid>
+                        <Divider className={classes.divider} />
+                        <Grid container spacing={5} className={classes.total}>
+                            <Grid item xs={6} >
+                                <Typography variant={"h4"}>Total:</Typography>
+                            </Grid>
+                            <Grid item xs={6} >
+                                <Typography variant={"h4"}>2'900CHF</Typography>
+                            </Grid>
+                            {showCheckOutButton &&
+                            <Grid item xs={12} >
+                                <Button
+                                variant={"contained"}
+                                color={"primary"}
+                                fullWidth
+                                onClick={()=> handleCheckOut()}
+                                >
+                                    Check out
+                                </Button>
+                            </Grid>
+                            }
+                        </Grid>
+                    </div>
                 </Drawer>
             }
             {renderMenu}

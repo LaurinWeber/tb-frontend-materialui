@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button, makeStyles, Paper, Grid, Typography, Icon } from '@material-ui/core';
-import ActivityCard from '../../components/ActivityCard';
 import HeroSvg from '../../assets/img/hero.svg'
 import Footer from '../../components/Footer';
 import { useHistory } from 'react-router-dom';
@@ -15,6 +14,7 @@ const useStyles = makeStyles((theme) => {
             padding: 0,
             maxWidth: '100%',
             width: '100vw',
+
         },
         wrapper: {
             height: 'auto',
@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => {
             padding: 0,
             maxWidth: '100%',
             width: '100vw',
+
         },
         itemService: {
             margin: 0,
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => {
             maxWidth: '100%',
             width: '100vw',
             height: 'calc(120vh - 65px)',
-            background: '#f1f1f1'
+            background: '#ffffff'
         },
         img: {
             maxHeight: '70vh'
@@ -58,7 +59,7 @@ const useStyles = makeStyles((theme) => {
     }
 })
 
-//home component
+//home components
 function Home() {
     const classes = useStyles();
     const history = useHistory();
@@ -76,18 +77,18 @@ function Home() {
                     </Typography>
                     <Button
                         type='submit'
-                        color='primary'
+                        color='secondary'
                         variant="contained"
                         className={classes.button}
                         onClick={
-                            ()=> history.push('/booking')
+                            () => history.push('/booking')
                         }
-                        >
+                    >
                         Private
                     </Button>
                     <Button
                         type='submit'
-                        color='primary'
+                        color='secondary'
                         variant='outlined'
                         align={"right"}
 
@@ -101,7 +102,6 @@ function Home() {
             </Grid>
             <Footer />
         </div>
-
     )
 }
 

@@ -6,6 +6,7 @@ import { green, red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import SkillCard from './SkillCard';
 
+/* styling of the account card */
 const useStyles = makeStyles((theme) => ({
     avatar: {
         backgroundColor: (account) => {
@@ -32,12 +33,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
+/*account car component, as a function */
 export default function AccountCard({ account, handleEdit, handleDelete }) {
-    const classes = useStyles(account)
+    const classes = useStyles()
     const [expanded, setExpanded] = useState(false)
     const [skills, setSkills] = useState([])
     const isOverview = true;
 
+    /* load the skills from the account */
     useEffect(() => {
         const sk = account.skills
         setSkills(sk)
@@ -61,7 +64,10 @@ export default function AccountCard({ account, handleEdit, handleDelete }) {
                             title='Edit Account'
                             placement='top'
                         >
-                            <IconButton onClick={() => handleEdit(account.accountID)}>
+                            <IconButton 
+                            onClick={() => handleEdit(account.accountID)}
+                            data-testid="edit-account"
+                            >
                                 <EditOutlinedIcon />
                             </IconButton>
                         </Tooltip>
@@ -76,6 +82,7 @@ export default function AccountCard({ account, handleEdit, handleDelete }) {
                             [classes.expandOpen]: expanded,
                         }}
                         onClick={handleExpandClick}
+                        data-testid="expand-account-details"
                         aria-expanded={expanded}
                         aria-label="show more"
                     >
@@ -86,7 +93,10 @@ export default function AccountCard({ account, handleEdit, handleDelete }) {
                         title='Delete Account'
                         placement='bottom'
                     >
-                        <IconButton onClick={() => handleDelete(account.accountID)}  className={classes.right}>
+                        <IconButton 
+                        onClick={() => handleDelete(account.accountID)}  className={classes.right}
+                        data-testid = "delete-account"
+                        >
                             <DeleteOutlineIcon />
                         </IconButton>
                     </Tooltip>

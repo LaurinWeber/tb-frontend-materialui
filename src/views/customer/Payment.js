@@ -1,6 +1,5 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core'
-import Footer from '../../components/Footer';
+import { makeStyles} from '@material-ui/core'
 
 //CSS styling => material ui style
 const useStyles = makeStyles((theme) => {
@@ -18,19 +17,21 @@ const useStyles = makeStyles((theme) => {
             maxWidth: '100%',
             width: '100vw',
         },
+        wrapper: {
+            padding: 50
+        }
     }
 })
 
-//payment component
-export default function Payment() {
+
+//payment components
+export default function Payment({name}) {
     const classes = useStyles();
 
+    //render component
     return (
         <div className={classes.root}>
-            <div className={classes.body}>
-                Payment
-            </div>
-            <Footer />
+            Payment : {name}
         </div>
     )
 }

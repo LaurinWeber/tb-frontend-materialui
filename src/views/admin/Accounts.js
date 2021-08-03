@@ -4,12 +4,11 @@ import AccountCard from '../../components/AccountCard'
 import PublishIcon from '@material-ui/icons/Publish';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { useHistory } from 'react-router-dom';
-import AccountForm from './AccountForm';
+import AccountForm from '../../components/AccountForm';
 import SaveIcon from '@material-ui/icons/Save';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import request from '../../utils/request';
-
-import Alert from '@material-ui/lab/Alert';
+import Alert from '@material-ui/lab/Alert'; //to show custom api errors
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 
@@ -56,11 +55,11 @@ const useStyles = makeStyles((theme) => {
 
 //initial Values
 const CATEGORIES = ['ski', 'snowboard'];
-
 const GENDERS = ['female', 'male'];
 const EDUCATIONS = ['ZA', 'Aspirant', 'Instructor', 'Patenter'];
 const LANGUAGES = ['en', 'fr', 'de', 'it'];
 
+//account object initial values
 const ACCOUNT = {
     isActive: false,
     firstname: '',
@@ -84,6 +83,7 @@ const ACCOUNT = {
     languages: { en: false, fr: false, de: false, it: false }
 };
 
+//errors initial values
 const ERROR = {
     isActive: false,
     firstname: [false, ""],
@@ -140,7 +140,7 @@ function validateAhv(number) {
     return isValid
 }
 
-//form validation
+//form validation of the account form
 function formValuesCheck(account, accounts, setError, isNew) {
     //reset Errors
     setError(ERROR)
@@ -373,23 +373,23 @@ function formValuesCheck(account, accounts, setError, isNew) {
     return isOk;
 }
 
+//accounts components
 export default function Accounts() {
     const classes = useStyles();
-    const history = useHistory();
-    const [accounts, setAccounts] = useState([])
+    const history = useHistory(); //change url
+    const [accounts, setAccounts] = useState([]) //accounts objects
     const [account, setAccount] = useState(ACCOUNT);
-    const [showForm, setShowForm] = useState(false)
-
+    const [showForm, setShowForm] = useState(false); //is form displayed
     const [skills, setSkills] = useState([]);
     const [skill, setSkill] = useState({ category: '', beginner: false, advanced: false, professional: false })
 
-    //const [account, setAccount] = useState(ACCOUNT);
     const [error, setError] = useState(ERROR);
     const [categories, setCategories] = useState(CATEGORIES);
-    const [isNew, setIsNew] = useState(true);
+    const [isNew, setIsNew] = useState(true); //is new = ture when new account is created
     const [apiErrorMessage, setApiErrorMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
+    //initial render get all accounts, on skill change get new data as well
     useEffect(async () => {
         setIsLoading(true);
         //get token
@@ -407,11 +407,7 @@ export default function Accounts() {
 
     }, [skills])
 
-    useEffect(async () => {
-        console.log("Is Loading", isLoading)
-
-    }, [setIsLoading])
-
+    //add skills from the from to the account object
     useEffect(() => {
         if (skills.length === 0) {
             console.log("skill null")
@@ -423,12 +419,12 @@ export default function Accounts() {
                 skills: skills
             }))
         }
+        //reset values from state of skill form
         setSkill({ category: '', beginner: false, advanced: false, professional: false });
     }, [skills])
 
+    //add skill to the skills of the account
     const addSkill = () => {
-        //let input = { category: 'snowboard', beginner: true, advanced: true, professional: true }
-        /*only add when category does not exist yet*/
         console.log(skill)
         if (skill.category) {
             if (!skills.length) {
@@ -445,11 +441,6 @@ export default function Accounts() {
                 }
                 console.log(skills)
             }
-            //const newCategories = categories.filter(cat => cat != skill.category)
-            //setCategories(newCategories);
-
-            //reset skill
-            //setSkill({ category: '', beginner: false, advanced: false, professional: false });
         }
     }
 
@@ -458,6 +449,7 @@ export default function Accounts() {
         formValuesCheck(account, accounts, setError, isNew);
     }, [account])
 
+    //on save account, check if form is valid and then send it to the backend
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -493,6 +485,7 @@ export default function Accounts() {
         }
     }
 
+    //in overview handle the add button click, toggle from overview to empty form
     const handleAddAccount = () => {
         setShowForm(!showForm)
         setSkills([]);
@@ -500,6 +493,7 @@ export default function Accounts() {
         setIsNew(true)
     }
 
+    /*handle the edit click, fill form with data */
     const handleEdit = (id) => {
         setShowForm(!showForm)
         const ea = accounts.filter(account => account.accountID === id);
@@ -509,11 +503,13 @@ export default function Accounts() {
         setIsNew(false)
     }
 
+    /*handle delete skill from an account */
     const deleteSkill = (category) => {
         const newSkills = skills.filter(skill => skill.category != category);
         setSkills(newSkills);
     }
 
+    /*handle the delete account */
     const handleDelete = async (id) => {
         //get token
         let token = JSON.parse(localStorage.getItem("user")).token;
@@ -530,6 +526,7 @@ export default function Accounts() {
 
     }
 
+    /*rendering */
     return (
         <Container>
             {showForm ?
@@ -610,11 +607,13 @@ export default function Accounts() {
                     </Grid>
                 </> :
                 <Grid container spacing={3}>
+                    {/*conditional rendering, show the loading circular boar if is loading state is set to true */}
                     {isLoading ?
                         <Grid item xs={12} className={classes.item} align="center">
                             <CircularProgress size={24} />
                         </Grid> :
                         <>
+                        {/*if there are accounts show them, otherwise display the error message from the api */}
                             {accounts ?
                                 <>
                                     <Grid item xs={12} >
