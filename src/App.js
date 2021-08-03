@@ -13,8 +13,6 @@ import Booking from './views/customer/Booking';
 import Payment from './views/customer/Payment'
 import ProtectedRoute from './components/ProtectedRoute';
 
-
-
 //define theme of the app
 const theme = createMuiTheme({
   palette: {

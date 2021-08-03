@@ -169,29 +169,6 @@ export default function Booking({ offerRequest, setOfferRequest }) {
                         <Typography variant={"h1"} >Booking</Typography>
                         <Typography variant={"subtitle1"}>Lorem ipsum dolor sit amet, et vel pertinax assueverit. Diceret neglegentur ne eam, sit movet epicurei appareat ut, expetenda persequeris ut usu. Falli recteque molestiae nam ne, cu lorem tractatos nec. Dolore dictas cetero an sit, est recusabo efficiantur ne, no dicant veritus electram quo. Veri nemore epicuri has ut, ne munere vidisse his, duo eleifend ullamcorper philosophia cu. Laudem fastidii in mel, ex vim ridens partiendo dissentias. Malis omnes ea pri.</Typography>
                     </Grid>
-                    {/*Filter */}
-                    <Grid item xs={3} spacing={3} className={classes.filter}>
-                        <Typography variant={"h3"}>Filter</Typography>
-                        <Grid item xs={12} >
-                            <Typography>Service</Typography>
-                            <div className={classes.itemWrapper}>
-                                {renderService}
-                            </div>
-                        </Grid>
-                        <Grid item xs={12} >
-                            <Typography>Participant</Typography>
-                            <div className={classes.itemWrapper}>
-                                {renderParticipant}
-                            </div>
-                        </Grid>
-                        <Grid item xs={12} >
-                            <Typography>Coach</Typography>
-                            <div className={classes.itemWrapper}>
-                                {renderCoach}
-                            </div>
-                        </Grid>
-                    </Grid>
-                    {/*Selection */}
                     {/*filter */}
                     <Grid item xs={3} spacing={3} className={classes.filter}>
                         <Typography variant={"h3"}>Filter</Typography>
@@ -214,12 +191,14 @@ export default function Booking({ offerRequest, setOfferRequest }) {
                             </div>
                         </Grid>
                     </Grid>
-                    {/*calendar */}
+
                     <Grid item xs={6} className={classes.calendar}  >
+                                            {/*calendar */}
                         <BookingCalendar selected={selected} setSelected={setSelected} handleSelect={handleSelect} appointments={appointments} setAppointments={setAppointments} offerRequest={offerRequest} />
                     </Grid>
-                    {/*SElections */}
+
                     <Grid item xs={3} spacing={3} className={classes.selection}>
+                                            {/*SElections */}
                         <Grid item xs={12} >
                             <Typography variant={"h3"}>Selection</Typography>
                             <div className={classes.itemWrapper}>
