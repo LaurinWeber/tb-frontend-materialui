@@ -1,5 +1,6 @@
 import React from 'react'
 
+//profile component
 function Profile({ user }) {
     var user = JSON.parse(localStorage.getItem('user'))
     var data = parseJwt(user.token);
@@ -12,6 +13,7 @@ function Profile({ user }) {
     )
 }
 
+//destrucutre token
 function parseJwt(token) {
     if (!token) { return; }
     const base64Url = token.split('.')[1];

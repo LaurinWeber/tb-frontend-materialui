@@ -1,6 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core';
 
+//CSS styling => material ui style
 const useStyles = makeStyles((theme) => {
     return {
         root: {
@@ -9,6 +10,7 @@ const useStyles = makeStyles((theme) => {
     }
 })
 
+//component
 function Page404() {
     const classes = useStyles();
     return (

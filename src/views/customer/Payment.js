@@ -2,6 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core'
 import Footer from '../../components/Footer';
 
+//CSS styling => material ui style
 const useStyles = makeStyles((theme) => {
     return {
         root: {
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => {
     }
 })
 
+//payment component
 export default function Payment() {
     const classes = useStyles();
 

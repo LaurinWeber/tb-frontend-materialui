@@ -5,6 +5,7 @@ import HeroSvg from '../../assets/img/hero.svg'
 import Footer from '../../components/Footer';
 import { useHistory } from 'react-router-dom';
 
+//CSS styling => material ui style
 const useStyles = makeStyles((theme) => {
     return {
         root: {
@@ -57,13 +58,14 @@ const useStyles = makeStyles((theme) => {
     }
 })
 
+//home component
 function Home() {
     const classes = useStyles();
     const history = useHistory();
     return (
 
         <div className={classes.root}>
-
+            {/*Hero section */}
             <Grid container spacing={3} className={classes.itemWrapper}>
                 <Grid item xs={12} sm={6} align={"center"} className={classes.callToAction}>
                     <Typography variant={"h3"} align={"center"} className={classes.button}>
@@ -95,30 +97,6 @@ function Home() {
                 </Grid>
                 <Grid item xs={12} sm={6} align={"center"} >
                     <img src={HeroSvg} className={classes.img}></img>
-                </Grid>
-            </Grid>
-            <Grid container spacing={3} className={classes.itemWrapper}>
-                <Grid item xs={12} sm={12} className={classes.itemService}>
-                    <Typography variant={"h3"} align={"center"}>
-                        Our Services
-                    </Typography>
-                </Grid>
-                <Grid item xs={12} sm={12} >
-                    <Typography variant={"subtitle1"} align={"center"}>
-                        Lorem ipsum dolor sit amet, mandamus adolescens est ut, ne mea omittam detraxit, intellegam interesset has ex. Ad sit veri debitis, purto facer nihil no sea, accusam consequat contentiones eu his. Cu usu epicurei appareat. In sit case ipsum, errem tempor vivendum mel ex.
-                    </Typography>
-                </Grid>
-                <Grid item xs={12} sm={3} >
-                    <ActivityCard />
-                </Grid>
-                <Grid item xs={12} sm={3} >
-                    <ActivityCard />
-                </Grid>
-                <Grid item xs={12} sm={3} >
-                    <ActivityCard />
-                </Grid>
-                <Grid item xs={12} sm={3} >
-                    <ActivityCard />
                 </Grid>
             </Grid>
             <Footer />

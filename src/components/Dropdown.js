@@ -1,8 +1,12 @@
 import React from 'react'
 import { FormControl, Select, InputLabel, MenuItem, makeStyles } from '@material-ui/core'
 
+const useStyles = makeStyles({
+})
+
 /* Dropdown component for the filter */
 export default function Dropdown({ choices, label, data,value, setData, error = null, helperText = null }) {
+    const classes = useStyles();
 
     return (
         <div className={classes.wrapper} >

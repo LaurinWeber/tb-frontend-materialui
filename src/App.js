@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import Home from "./views/customer/Home";
@@ -9,34 +7,32 @@ import Calendar from './views/admin/Calendar';
 import Profile from './views/employee/Profile';
 import Groups from './views/admin/Groups';
 import Login from './views/Login';
-import react, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Page404 from './views/errors/Page404';
-import ErrorHandler from './utils/ErrorHandler'
 import Booking from './views/customer/Booking';
-import Payment from './views/customer/Payment'
+import Payment from './views/customer/Payment';
+import ProtectedRoute from './components/ProtectedRoute';
 
-
-
+//define theme of the app
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#FC9E21',
-    },
-    secondary: {
       main: '#373737',
     },
-
+    secondary: {
+      main: '#FC9E21',
+    },
   }
 })
 
-
+//app component
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
+  //check if the user is still logged in => adapt the layout
   useEffect(() => {
     //should also check if token is still valid otherwise automatical log out!
-
     var user = JSON.parse(localStorage.getItem('user'));
     if (user != null || user != undefined) {
       var token = parseJwt(user.token);
@@ -49,20 +45,12 @@ function App() {
     } else {
       setIsLoggedIn(false);
     }
-
-    console.log("Layout-Mount")
-
-    return () => {
-      console.log("Un-Mount")
-    }
   }, [])
 
   return (
     <ThemeProvider theme={theme}>
       <Router>
-
         <Layout isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} isAdmin={isAdmin}>
-          <ErrorHandler>
             <Switch>
               <Route exact path="/">
                 <Home />
@@ -76,34 +64,22 @@ function App() {
               <Route exact path="/login" >
                 <Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />
               </Route>
-              {
-                isLoggedIn &&
-                <>
-                  <Route exact path="/accounts">
-                    <Accounts />
-                  </Route>
-                  <Route exact path="/groups" >
-                    <Groups></Groups>
-                  </Route>
-                  <Route exact path="/calendar" >
-                    <Calendar isLoggedIn={isLoggedIn} />
-                  </Route>
-                  <Route exact path="/profile" >
-                    <Profile />
-                  </Route>
-                </>
-              }
+              <ProtectedRoute component={Accounts}/>
+              <ProtectedRoute component={Groups}/>
+              <ProtectedRoute component={Calendar}/>
+              <ProtectedRoute component={Profile}/>
+              {/*path that do not exists = 404 */}
               <Route path="*" >
                 <Page404 />
               </Route>
             </Switch>
-          </ErrorHandler>
         </Layout>
       </Router>
     </ThemeProvider>
   );
 }
 
+//destrucutre the token
 function parseJwt(token) {
   if (!token) { return; }
   const base64Url = token.split('.')[1];

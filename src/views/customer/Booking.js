@@ -7,8 +7,8 @@ import BookingCalendar from '../../components/BookingCalendar';
 import SelectionCard from '../../components/SelectionCard';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
-import CloseIcon from '@material-ui/icons/Close';
 
+//CSS styling => material ui style
 const useStyles = makeStyles((theme) => {
     return {
         root: {
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => {
     }
 })
 
-//service
+//dropdown values
 const Activities = ["ski", "snowboard"]
 const Types = ["private", "group"]
 const Hours = [2, 3, 6]
@@ -60,6 +60,7 @@ const Levels = ["beginner", "advanced", "professional"]
 const Languages = ["German", "French", "Italian", "English"]
 const Genders = ["Male", "Female"]
 
+//initial booking request values
 const INITIAL = {
     Activity: "",
     Type: "",
@@ -69,6 +70,7 @@ const INITIAL = {
     Gender: "",
 }
 
+//booking view component
 export default function Booking() {
     const classes = useStyles();
     const [data, setData] = useState(INITIAL)
@@ -77,15 +79,8 @@ export default function Booking() {
     const [numberParticipants, setNumberParticipants] = useState(1)
     const [participants, setParticipants] = useState([]); //participants
     const [open, setOpen] = useState(false);
-    const addToCart = true;
 
-    useEffect(() => {
-        console.log(data)
-        return () => {
-
-        }
-    }, [data])
-
+    //Service filter 
     const renderService = (
         <Grid container className={classes.item} spacing={3}>
             <Grid item xs={12} >
@@ -100,6 +95,7 @@ export default function Booking() {
         </Grid>
     );
 
+    //participant filter
     const renderParticipant = (
         <Grid container className={classes.item} spacing={3}>
             <Grid item xs={12} >
@@ -108,6 +104,7 @@ export default function Booking() {
         </Grid>
     );
 
+    //coach filter
     const renderCoach = (
         <Grid container className={classes.item} spacing={3}>
             <Grid item xs={12} >
@@ -119,6 +116,7 @@ export default function Booking() {
         </Grid>
     );
 
+    //remove from the selection
     const handleRemove = (id) => {
         const newSelection = selected.filter(selection => selection.id != id);
         setSelected(newSelection);
@@ -128,33 +126,34 @@ export default function Booking() {
         <div className={classes.root}>
             <div className={classes.body}>
                 <Grid container className={classes.wrapper}>
+                    {/*Title */}
                     <Grid item xs={12} className={classes.title}>
                         <Typography variant={"h1"} >Booking</Typography>
                         <Typography variant={"subtitle1"}>Lorem ipsum dolor sit amet, et vel pertinax assueverit. Diceret neglegentur ne eam, sit movet epicurei appareat ut, expetenda persequeris ut usu. Falli recteque molestiae nam ne, cu lorem tractatos nec. Dolore dictas cetero an sit, est recusabo efficiantur ne, no dicant veritus electram quo. Veri nemore epicuri has ut, ne munere vidisse his, duo eleifend ullamcorper philosophia cu. Laudem fastidii in mel, ex vim ridens partiendo dissentias. Malis omnes ea pri.</Typography>
                     </Grid>
-                    {showFilter &&
-                        <Grid item xs={3} spacing={3} className={classes.filter}>
-                            <Typography variant={"h3"}>Filter</Typography>
-                            <Grid item xs={12} >
-                                <Typography>Service</Typography>
-                                <div className={classes.itemWrapper}>
-                                    {renderService}
-                                </div>
-                            </Grid>
-                            <Grid item xs={12} >
-                                <Typography>Participant</Typography>
-                                <div className={classes.itemWrapper}>
-                                    {renderParticipant}
-                                </div>
-                            </Grid>
-                            <Grid item xs={12} >
-                                <Typography>Coach</Typography>
-                                <div className={classes.itemWrapper}>
-                                    {renderCoach}
-                                </div>
-                            </Grid>
-                        </Grid>}
-
+{/*Filter */}
+                    <Grid item xs={3} spacing={3} className={classes.filter}>
+                        <Typography variant={"h3"}>Filter</Typography>
+                        <Grid item xs={12} >
+                            <Typography>Service</Typography>
+                            <div className={classes.itemWrapper}>
+                                {renderService}
+                            </div>
+                        </Grid>
+                        <Grid item xs={12} >
+                            <Typography>Participant</Typography>
+                            <div className={classes.itemWrapper}>
+                                {renderParticipant}
+                            </div>
+                        </Grid>
+                        <Grid item xs={12} >
+                            <Typography>Coach</Typography>
+                            <div className={classes.itemWrapper}>
+                                {renderCoach}
+                            </div>
+                        </Grid>
+                    </Grid>
+                    {/*Selection */}
                     <Grid item xs={6} className={classes.calendar}  >
                         <BookingCalendar selected={selected} setSelected={setSelected} />
                     </Grid>

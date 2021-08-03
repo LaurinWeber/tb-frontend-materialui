@@ -9,8 +9,8 @@ import request from '../utils/request';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Alert from '@material-ui/lab/Alert';
-import Footer from '../components/Footer'
 
+//CSS styling => material ui style
 const useStyles = makeStyles((theme) => ({
     root: {
         height: '88vh',
@@ -58,30 +58,31 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }));
+//initial error values
 const ERROR = {
     email: [false, ""],
     password: [false, ""],
 }
 
+//initial login input values
 const LOGIN = {
     id: 0,
     email: "",
     password: ""
 }
 
-//form validation
+//form validation of the login
 function formValuesCheck(login, setError) {
     //reset Errors
     setError(ERROR)
 
+    //assume all fields are valid
     let isOk = true;
 
     let eMail = [false, ""];
     const validMail = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
 
-    /*if (accounts.filter(a => a.email === login.email).length > 0) {
-        eMail = [true, "email already in use"];
-    }*/
+    //if fields are not valid set custom error message
     if (!validMail.test(login.email)) {
         eMail = [true, "must be email format e.g. hans.muster@mail.ch"];
     }
@@ -91,6 +92,7 @@ function formValuesCheck(login, setError) {
     if (login.email.length > 255) {
         eMail = [true, "Max length 255 character" + " | Remove " + (login.email.length - 255) + " character(s)"];
     }
+    //set the error
     if (eMail[0]) {
         setError((prevState) => ({
             ...prevState,
@@ -100,11 +102,6 @@ function formValuesCheck(login, setError) {
     }
 
     let ePassword = [false, ""];
-    const validPassword = new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$');
-
-    /*if (!validPassword.test(login.password)) {
-        ePassword = [true, "min 8 char, [A-Z], [a-z], [#?!@$%^&*-] "];
-    }*/
     if (login.password == '') {
         ePassword = [true, "empty"];
     }
@@ -127,6 +124,7 @@ export default function Login({ setIsLoggedIn, setIsAdmin }) {
     const [showPassword, setShowPassword] = useState(false);
     const [apiErrorMessage, setApiErrorMessage] = useState(null);
 
+    //show the password
     const handleShowPassword = () => {
         setShowPassword(!showPassword)
     }
@@ -136,6 +134,7 @@ export default function Login({ setIsLoggedIn, setIsAdmin }) {
         formValuesCheck(login, setError);
     }, [login])
 
+    //make post request to the backend
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -194,10 +193,12 @@ export default function Login({ setIsLoggedIn, setIsAdmin }) {
                             Sign in
                         </Typography>
                     </Grid>
+                    {/*If error in api show error message with alert */}
                     {apiErrorMessage &&
                         <Grid item xs={12} className={classes.item} align="center">
                             <Alert severity="error" >{apiErrorMessage} </Alert>
                         </Grid>}
+                        {/*Conditional rendering of loading circle */}
                     {isLoading ?
                         <Grid item xs={12} className={classes.item} align="center">
                             <CircularProgress size={24} />
@@ -275,6 +276,7 @@ export default function Login({ setIsLoggedIn, setIsAdmin }) {
     )
 }
 
+//destrucutre token
 function parseJwt(token) {
     if (!token) { return; }
     const base64Url = token.split('.')[1];
